@@ -1,0 +1,2473 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>מרכז פרס לשלום ולחדשנות</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@200;300;400;500;600;700;800;900&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --blue:      #004099;
+  --blue-dark: #002870;
+  --blue-light:#1a5cbf;
+  --blue-pale: #e8f0fc;
+  --orange:    #E04A1C;
+  --orange-lt: #f06030;
+  --white:     #ffffff;
+  --off-white: #f7f8fc;
+  --border:    #dde3f0;
+  --text:      #1a1a2e;
+  --text-mid:  #4a4a6a;
+  --text-light:#8888a8;
+  --gold:      #c8a040;
+}
+
+html{scroll-behavior:smooth}
+body{font-family:'Heebo',sans-serif;color:var(--text);background:var(--white);font-size:16px;line-height:1.6;overflow-x:hidden}
+
+/* ── ACCESSIBILITY ── */
+.skip-link{position:fixed;top:-100px;right:0;background:var(--orange);color:#fff;padding:10px 20px;z-index:9999;font-size:14px;font-weight:600;text-decoration:none;transition:top .2s}
+.skip-link:focus{top:0}
+*:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+*:focus:not(:focus-visible){outline:none}
+
+/* ── TYPOGRAPHY ── */
+h1{font-size:52px;font-weight:800;line-height:1.1}
+h2{font-size:36px;font-weight:700;line-height:1.2;color:var(--blue-dark)}
+h3{font-size:22px;font-weight:600;line-height:1.3}
+h4{font-size:17px;font-weight:600}
+p{font-size:16px;line-height:1.75;color:var(--text-mid)}
+a{color:inherit;text-decoration:none}
+
+.section-tag{font-size:12px;letter-spacing:.2em;color:var(--orange);font-weight:600;text-transform:uppercase;margin-bottom:12px}
+.section-title{font-size:36px;font-weight:700;color:var(--blue-dark);margin-bottom:14px;line-height:1.2}
+.section-sub{font-size:17px;color:var(--text-mid);max-width:600px;line-height:1.75}
+.divider{width:48px;height:3px;background:var(--orange);margin:20px 0}
+
+/* ── LAYOUT ── */
+.container{max-width:1200px;margin:0 auto;padding:0 32px}
+.section{padding:80px 0}
+.section-alt{background:var(--off-white)}
+.section-dark{background:var(--blue-dark);color:var(--white)}
+.section-dark h2,.section-dark h3,.section-dark .section-title{color:var(--white)}
+.section-dark p,.section-dark .section-sub{color:rgba(255,255,255,.78)}
+
+/* ── GRID SYSTEMS ── */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.flex-center{display:flex;align-items:center;justify-content:center}
+.flex-between{display:flex;align-items:center;justify-content:space-between}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 32px;font-family:'Heebo',sans-serif;font-size:14px;font-weight:600;letter-spacing:.04em;cursor:pointer;border:none;transition:all .25s;text-decoration:none}
+.btn-primary{background:var(--orange);color:var(--white)}
+.btn-primary:hover{background:var(--orange-lt);transform:translateY(-1px);box-shadow:0 4px 18px rgba(224,74,28,.3)}
+.btn-secondary{background:transparent;border:2px solid var(--blue);color:var(--blue)}
+.btn-secondary:hover{background:var(--blue);color:var(--white)}
+.btn-white{background:var(--white);color:var(--blue-dark)}
+.btn-white:hover{background:var(--off-white)}
+.btn-outline-white{background:transparent;border:2px solid rgba(255,255,255,.6);color:var(--white)}
+.btn-outline-white:hover{background:rgba(255,255,255,.1);border-color:var(--white)}
+
+/* ── HEADER & NAV ── */
+#site-header{
+  position:sticky;top:0;z-index:500;
+  background:var(--white);
+  border-bottom:1px solid var(--border);
+  box-shadow:0 2px 12px rgba(0,0,0,.06);
+}
+.header-top{
+  background:var(--blue-dark);padding:7px 0;
+  font-size:12px;color:rgba(255,255,255,.7);letter-spacing:.06em;
+}
+.header-top .container{display:flex;justify-content:space-between;align-items:center}
+.header-top a{color:rgba(255,255,255,.7);transition:color .2s}
+.header-top a:hover{color:var(--white)}
+.header-top-links{display:flex;gap:20px}
+.header-lang a{border:1px solid rgba(255,255,255,.3);padding:2px 10px;font-size:11px;letter-spacing:.08em}
+.header-main{padding:14px 0}
+.header-main .container{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.site-logo{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.logo-emblem{width:52px;height:52px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:20px;font-weight:800;letter-spacing:-.02em;flex-shrink:0}
+.logo-text-he{font-size:17px;font-weight:700;color:var(--blue-dark);line-height:1.2}
+.logo-text-en{font-size:11px;color:var(--text-light);letter-spacing:.06em;font-weight:400}
+.main-nav{display:flex;gap:0;align-items:center}
+.nav-item{position:relative}
+.nav-link{display:flex;align-items:center;gap:4px;padding:10px 14px;font-size:14px;font-weight:500;color:var(--text-mid);cursor:pointer;white-space:nowrap;transition:color .2s;background:none;border:none;font-family:'Heebo',sans-serif}
+.nav-link:hover,.nav-link.active{color:var(--blue)}
+.nav-link .arrow{font-size:9px;transition:transform .2s}
+.nav-item:hover .arrow{transform:rotate(180deg)}
+/* Dropdown */
+.dropdown{
+  display:none;position:absolute;top:calc(100% + 1px);right:0;
+  background:var(--white);border:1px solid var(--border);
+  box-shadow:0 8px 30px rgba(0,0,0,.12);min-width:220px;z-index:100;
+  padding:8px 0;
+}
+.nav-item:hover .dropdown{display:block}
+.dd-item{display:block;padding:11px 20px;font-size:14px;color:var(--text-mid);transition:all .18s;border-right:3px solid transparent}
+.dd-item:hover{color:var(--blue);background:var(--blue-pale);border-right-color:var(--orange)}
+/* Nested submenu */
+.dd-item.has-sub{display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.dd-item.has-sub::after{content:'◂';font-size:10px;color:var(--text-light)}
+.submenu{
+  display:none;position:absolute;top:0;left:calc(100% + 1px);
+  background:var(--white);border:1px solid var(--border);
+  box-shadow:0 8px 30px rgba(0,0,0,.12);min-width:210px;z-index:101;
+  padding:8px 0;
+}
+.dd-item.has-sub:hover .submenu{display:block}
+.submenu .dd-item{padding:11px 20px;border-right:none;border-right:3px solid transparent}
+.submenu .dd-item:hover{border-right-color:var(--orange)}
+/* Peres panel (about section) */
+.peres-panel{
+  position:relative;display:inline-block;
+}
+.peres-menu{
+  display:none;position:absolute;top:calc(100% + 8px);right:0;
+  background:var(--white);border:1px solid var(--border);
+  box-shadow:0 8px 30px rgba(0,0,0,.12);min-width:220px;z-index:50;padding:8px 0;
+}
+.peres-panel:hover .peres-menu{display:block}
+.peres-menu a{display:flex;align-items:center;gap:12px;padding:13px 20px;font-size:14px;color:var(--text-mid);transition:all .18s;border-right:3px solid transparent}
+.peres-menu a:hover{color:var(--blue);background:var(--blue-pale);border-right-color:var(--orange)}
+.peres-menu-icon{font-size:18px;width:28px;text-align:center}
+.header-cta{display:flex;gap:10px;align-items:center;flex-shrink:0}
+
+/* ── HERO ── */
+#hero{
+  position:relative;height:92vh;min-height:560px;
+  display:flex;align-items:center;overflow:hidden;
+}
+.hero-bg{position:absolute;inset:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(105deg,rgba(0,28,80,.88) 40%,rgba(0,28,80,.45) 100%);
+}
+.hero-content{position:relative;z-index:2;max-width:680px}
+.hero-tag{font-size:12px;letter-spacing:.22em;color:rgba(255,255,255,.65);font-weight:500;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.hero-tag::before{content:'';width:32px;height:1px;background:var(--orange)}
+.hero-title{font-size:54px;font-weight:800;color:var(--white);line-height:1.1;margin-bottom:22px}
+.hero-title span{color:var(--orange)}
+.hero-desc{font-size:18px;color:rgba(255,255,255,.82);line-height:1.8;margin-bottom:36px;font-weight:300;max-width:520px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.hero-stats{
+  position:absolute;bottom:0;left:0;right:0;z-index:2;
+  background:rgba(0,28,80,.92);border-top:1px solid rgba(255,255,255,.1);
+}
+.hero-stats .container{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat-item{padding:22px 28px;border-left:1px solid rgba(255,255,255,.1);text-align:center}
+.stat-item:last-child{border-left:none}
+.stat-num{font-size:34px;font-weight:800;color:var(--white);line-height:1}
+.stat-label{font-size:12px;color:rgba(255,255,255,.6);letter-spacing:.06em;margin-top:4px}
+
+/* ── ABOUT STRIP ── */
+.about-strip{background:var(--blue);padding:48px 0}
+.about-strip .container{display:flex;align-items:center;gap:48px}
+.about-strip-text{flex:1}
+.about-strip-text h2{color:var(--white);font-size:30px}
+.about-strip-text p{color:rgba(255,255,255,.8);margin-top:12px;font-size:16px}
+.about-strip-img{width:340px;height:220px;object-fit:cover;flex-shrink:0;filter:brightness(.85)}
+
+/* ── PROGRAMS ── */
+.prog-card{background:var(--white);border:1px solid var(--border);padding:32px 28px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.prog-card::before{content:'';position:absolute;top:0;right:0;width:4px;height:100%;background:var(--blue);transform:scaleY(0);transition:transform .3s;transform-origin:bottom}
+.prog-card:hover{border-color:var(--blue);box-shadow:0 6px 28px rgba(0,64,153,.12);transform:translateY(-3px)}
+.prog-card:hover::before{transform:scaleY(1)}
+.prog-icon{width:52px;height:52px;background:var(--blue-pale);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:18px}
+.prog-card h3{font-size:19px;color:var(--blue-dark);margin-bottom:10px}
+.prog-card p{font-size:14px;color:var(--text-mid);line-height:1.7}
+.prog-card .prog-link{display:flex;align-items:center;gap:6px;margin-top:18px;font-size:13px;font-weight:600;color:var(--blue);transition:gap .2s}
+.prog-card:hover .prog-link{gap:10px}
+
+/* ── VIRTUAL TOUR SECTION ── */
+.vt-section{background:linear-gradient(135deg,var(--blue-dark) 0%,#002060 100%);padding:80px 0;position:relative;overflow:hidden}
+.vt-section::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:36px 36px}
+.vt-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
+.vt-label{font-size:11px;letter-spacing:.26em;color:var(--orange);font-weight:600;margin-bottom:14px}
+.vt-title{font-size:40px;font-weight:800;color:var(--white);line-height:1.2;margin-bottom:18px}
+.vt-desc{font-size:16px;color:rgba(255,255,255,.78);line-height:1.85;margin-bottom:28px}
+.vt-features{display:flex;flex-direction:column;gap:14px;margin-bottom:32px}
+.vt-feat{display:flex;align-items:center;gap:14px;font-size:15px;color:rgba(255,255,255,.85)}
+.vt-feat-icon{width:36px;height:36px;background:rgba(255,255,255,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.vt-preview{position:relative}
+.vt-screen{width:100%;height:320px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.vt-screen img{width:100%;height:100%;object-fit:cover;filter:brightness(.6)}
+.vt-play{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+.vt-play-btn{width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;font-size:28px;cursor:pointer;transition:all .25s;backdrop-filter:blur(8px)}
+.vt-play-btn:hover{background:var(--orange);border-color:var(--orange);transform:scale(1.1)}
+.vt-play span{font-size:13px;color:rgba(255,255,255,.8);letter-spacing:.08em}
+
+/* ── MISSION QUOTE ── */
+.quote-section{background:var(--blue-pale);padding:60px 0}
+.quote-inner{max-width:820px;margin:0 auto;text-align:center}
+blockquote.big-quote{font-size:26px;font-weight:300;color:var(--blue-dark);line-height:1.7;font-style:italic;margin-bottom:20px}
+blockquote.big-quote strong{font-weight:700;font-style:normal;color:var(--blue)}
+cite.big-cite{font-size:14px;letter-spacing:.12em;color:var(--text-light);font-style:normal;font-weight:500}
+
+/* ── NEWS ── */
+.news-card{background:var(--white);border:1px solid var(--border);overflow:hidden;transition:all .25s}
+.news-card:hover{box-shadow:0 8px 32px rgba(0,0,0,.1);transform:translateY(-2px)}
+.news-img{width:100%;height:190px;object-fit:cover;background:var(--blue-pale)}
+.news-img-placeholder{width:100%;height:190px;background:linear-gradient(135deg,var(--blue-pale),#c8d8f8);display:flex;align-items:center;justify-content:center;font-size:42px}
+.news-body{padding:24px}
+.news-cat{font-size:11px;letter-spacing:.14em;color:var(--orange);font-weight:600;margin-bottom:8px}
+.news-card h3{font-size:18px;color:var(--blue-dark);margin-bottom:10px;line-height:1.35}
+.news-card p{font-size:14px;color:var(--text-mid);line-height:1.65}
+.news-date{font-size:12px;color:var(--text-light);margin-top:14px}
+
+/* ── EVENTS ── */
+.event-row{display:flex;gap:24px;align-items:flex-start;padding:24px 0;border-bottom:1px solid var(--border)}
+.event-row:last-child{border-bottom:none}
+.event-date-box{width:68px;height:70px;background:var(--blue);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;color:var(--white)}
+.event-day{font-size:28px;font-weight:800;line-height:1}
+.event-month{font-size:11px;letter-spacing:.08em;font-weight:400;opacity:.8}
+.event-info h4{font-size:17px;color:var(--blue-dark);margin-bottom:5px}
+.event-info p{font-size:14px;color:var(--text-mid)}
+.event-meta{display:flex;gap:14px;margin-top:8px;font-size:12px;color:var(--text-light)}
+.event-tag{font-size:11px;letter-spacing:.1em;color:var(--white);background:var(--orange);padding:2px 8px;font-weight:600}
+
+/* ── EDUCATION ── */
+.edu-card{background:var(--white);border:1px solid var(--border);padding:30px;transition:all .25s}
+.edu-card:hover{border-color:var(--orange);box-shadow:0 4px 20px rgba(224,74,28,.1)}
+.edu-age{display:inline-block;font-size:11px;letter-spacing:.12em;color:var(--orange);border:1px solid var(--orange);padding:3px 10px;margin-bottom:14px;font-weight:600}
+.edu-card h3{font-size:18px;color:var(--blue-dark);margin-bottom:10px}
+.edu-card p{font-size:14px;color:var(--text-mid);line-height:1.7}
+.edu-list{margin-top:14px;padding:0;list-style:none}
+.edu-list li{font-size:13px;color:var(--text-mid);padding:5px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.edu-list li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--orange);flex-shrink:0}
+
+/* ── VISIT ── */
+.visit-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:start}
+.visit-card{background:var(--white);border:1px solid var(--border);padding:28px}
+.visit-card h4{font-size:14px;letter-spacing:.12em;color:var(--text-light);margin-bottom:16px;font-weight:500}
+.visit-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border);font-size:14px}
+.visit-row:last-child{border-bottom:none}
+.visit-day{color:var(--text-mid);font-weight:500}
+.visit-hours{color:var(--blue);font-weight:600}
+.visit-closed{color:var(--text-light)}
+.visit-tickets .ticket-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);font-size:14px}
+.ticket-price{font-size:18px;font-weight:700;color:var(--blue-dark)}
+.ticket-note{font-size:12px;color:var(--text-light);margin-top:2px}
+.map-placeholder{width:100%;height:300px;background:linear-gradient(135deg,#c8d8f0 0%,#e0e8f8 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.map-pin{font-size:52px}
+.map-address{position:absolute;bottom:0;left:0;right:0;background:rgba(0,40,120,.9);color:var(--white);padding:16px 20px;font-size:13px;line-height:1.6}
+
+/* ── PARTNERS ── */
+.partners-section{padding:56px 0;border-top:1px solid var(--border)}
+.partner-logos{display:flex;gap:32px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:32px}
+.partner-logo{height:40px;opacity:.55;filter:grayscale(1);transition:all .25s;display:flex;align-items:center;justify-content:center;padding:6px 16px;border:1px solid var(--border);font-size:13px;font-weight:600;color:var(--text-mid);min-width:100px;text-align:center}
+.partner-logo:hover{opacity:1;filter:none;border-color:var(--blue);color:var(--blue)}
+
+/* ── SUPPORT ── */
+.support-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.support-card{background:var(--blue-dark);padding:36px 28px;text-align:center;position:relative;overflow:hidden}
+.support-card::after{content:'';position:absolute;top:0;right:0;left:0;height:4px;background:var(--orange)}
+.support-card.highlight{background:var(--orange)}
+.support-icon{font-size:40px;margin-bottom:18px}
+.support-card h3{font-size:22px;font-weight:700;color:var(--white);margin-bottom:12px}
+.support-card p{font-size:14px;color:rgba(255,255,255,.78);line-height:1.7;margin-bottom:22px}
+
+/* ── NEWSLETTER ── */
+.newsletter{background:var(--blue);padding:56px 0}
+.newsletter-inner{display:flex;align-items:center;gap:48px}
+.newsletter-text{flex:1}
+.newsletter-text h2{color:var(--white);font-size:28px;margin-bottom:6px}
+.newsletter-text p{color:rgba(255,255,255,.75);font-size:15px}
+.newsletter-form{display:flex;gap:0;flex-shrink:0;width:400px}
+.newsletter-input{flex:1;padding:14px 18px;border:none;font-family:'Heebo',sans-serif;font-size:15px;background:rgba(255,255,255,.12);color:var(--white);border:1px solid rgba(255,255,255,.25);border-left:none;outline:none}
+.newsletter-input::placeholder{color:rgba(255,255,255,.5)}
+.newsletter-input:focus{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.18)}
+.newsletter-btn{padding:14px 24px;background:var(--orange);border:none;color:var(--white);font-family:'Heebo',sans-serif;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .2s;border:1px solid var(--orange)}
+.newsletter-btn:hover{background:var(--orange-lt)}
+
+/* ── FOOTER ── */
+footer{background:var(--text);color:rgba(255,255,255,.7);padding:60px 0 0}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand .logo-text-he{color:var(--white)}
+.footer-brand .logo-text-en{color:rgba(255,255,255,.5)}
+.footer-brand p{font-size:14px;color:rgba(255,255,255,.55);margin-top:14px;line-height:1.7}
+.footer-col h5{font-size:13px;letter-spacing:.1em;color:var(--white);font-weight:600;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.1)}
+.footer-links{list-style:none}
+.footer-links li{margin-bottom:10px}
+.footer-links a{font-size:14px;color:rgba(255,255,255,.55);transition:color .2s;display:flex;align-items:center;gap:6px}
+.footer-links a:hover{color:var(--white)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding:20px 0;display:flex;justify-content:space-between;align-items:center}
+.footer-bottom p{font-size:13px;color:rgba(255,255,255,.4)}
+.social-links{display:flex;gap:12px}
+.social-link{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .2s;color:rgba(255,255,255,.6)}
+.social-link:hover{background:var(--orange);color:var(--white)}
+
+/* ── BREADCRUMBS & SECTION HEADERS ── */
+.section-header{margin-bottom:48px}
+.section-header.center{text-align:center}
+.section-header.center .divider{margin:20px auto}
+.section-header.center .section-sub{margin:0 auto}
+.view-all{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--blue);transition:gap .2s;cursor:pointer}
+.view-all:hover{gap:10px}
+.section-header-row{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px}
+
+/* ── ORANGE BAND ── */
+.orange-band{background:var(--orange);padding:28px 0}
+.orange-band .container{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.orange-band p{font-size:18px;font-weight:600;color:var(--white)}
+.orange-band span{font-size:16px;font-weight:300;opacity:.9}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.animate{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.animate.visible{opacity:1;transform:translateY(0)}
+
+/* ── BREADCRUMB NAV ── */
+.page-banner{background:linear-gradient(135deg,var(--blue-dark),#003080);padding:48px 0}
+.page-banner h1{font-size:40px;color:var(--white);font-weight:800}
+.breadcrumb{font-size:13px;color:rgba(255,255,255,.6);margin-top:10px}
+.breadcrumb a{color:rgba(255,255,255,.7)}
+.breadcrumb span{color:rgba(255,255,255,.4);margin:0 8px}
+
+/* ── TABS ── */
+.tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:36px}
+.tab{padding:12px 22px;font-size:14px;font-weight:500;color:var(--text-mid);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;font-family:'Heebo',sans-serif}
+.tab.active,.tab:hover{color:var(--blue);border-bottom-color:var(--blue)}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  h1{font-size:36px}
+  h2{font-size:28px}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+  .hero-title{font-size:36px}
+  .container{padding:0 20px}
+  .main-nav{display:none}
+  .header-top{display:none}
+  .hero-stats .container{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .newsletter-inner{flex-direction:column;gap:24px}
+  .newsletter-form{width:100%}
+  .vt-inner{grid-template-columns:1fr}
+  .visit-grid{grid-template-columns:1fr}
+  .support-grid{grid-template-columns:1fr}
+}
+
+/* ════ VIRTUAL TOUR ════ */
+#tour-overlay{position:fixed;inset:0;z-index:2000;overflow:hidden}
+
+#tour-overlay{
+  --bg:    #080604;
+  --warm:  #1a1208;
+  --gold:  #c8a040;
+  --gold2: #f0c060;
+  --cream: #f0e4c0;
+  --amber: #c87830;
+  --dim:   rgba(240,228,192,.6);
+  --faint: rgba(240,228,192,.28);
+  --card:  rgba(30,20,8,.85);
+}
+/* ── UTILITY ── */
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .7s ease;padding:28px 24px;z-index:2}
+.screen.active{opacity:1;pointer-events:all}
+.tag{font-size:11px;letter-spacing:.22em;color:var(--gold);font-weight:500;margin-bottom:12px;opacity:.85}
+.jbtn{display:inline-flex;align-items:center;gap:8px;padding:13px 32px;font-family:'Heebo',sans-serif;
+  font-size:14px;font-weight:600;letter-spacing:.04em;cursor:pointer;border:none;transition:all .25s}
+.jbtn-gold{background:var(--gold);color:#1a0800}
+.jbtn-gold:hover{background:var(--gold2);transform:translateY(-1px);box-shadow:0 4px 22px rgba(200,160,64,.4)}
+.jbtn-outline{background:transparent;border:1px solid rgba(240,228,192,.25);color:var(--dim)}
+.jbtn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.jbtn-sm{padding:9px 20px;font-size:13px}
+
+/* ── BACKGROUND CANVAS ── */
+#tourBgCanvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ── MUSIC / BACK CONTROLS ── */
+#tourControls{position:fixed;top:16px;left:16px;z-index:300;display:flex;gap:8px}
+.tourCtrlBtn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.12);color:var(--dim);font-size:14px;cursor:pointer;
+  transition:all .2s;display:flex;align-items:center;justify-content:center;font-family:'Heebo',sans-serif}
+.tourCtrlBtn:hover{background:rgba(200,160,64,.15);border-color:var(--gold);color:var(--gold)}
+.tourCtrlBtn.hidden{opacity:0;pointer-events:none}
+
+/* ── PROGRESS ── */
+#tourProgress{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+  display:flex;gap:10px;z-index:100;align-items:center}
+.tdot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.18);transition:all .35s}
+.tdot.done{background:rgba(200,160,64,.5)}
+.tdot.active{background:var(--gold);width:18px;border-radius:3px}
+
+/* ════════════════════════
+   S0 — CINEMATIC INTRO
+════════════════════════ */
+#s0{padding:0;z-index:10}
+.intro-stage{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease;overflow:hidden}
+.intro-stage.show{opacity:1}
+.intro-img{width:100%;height:100%;object-fit:cover;object-position:center}
+.ken-burns{animation:kb 8s ease-in-out forwards}
+.ken-right{animation:kbr 8s ease-in-out forwards}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.1)}}
+@keyframes kbr{from{transform:scale(1) translateX(0)}to{transform:scale(1.08) translateX(2%)}}
+.intro-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,6,4,.9) 0%,rgba(8,6,4,.35) 60%,rgba(8,6,4,.2) 100%)}
+.intro-caption{position:absolute;bottom:80px;right:48px;text-align:right}
+.intro-caption h2{font-size:32px;font-weight:700;color:var(--cream);margin-bottom:6px}
+.intro-caption p{font-size:14px;color:var(--dim);letter-spacing:.1em}
+/* Elevator stage */
+#intro-2{background:#0c0a08;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.elevator-shaft{width:140px;height:320px;border:1px solid rgba(200,160,64,.2);position:relative;overflow:hidden;background:#0a0806}
+.elevator-floors{position:absolute;right:0;top:0;width:32px;height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:8px 0;border-right:1px solid rgba(200,160,64,.1)}
+.floor-num{font-size:11px;color:rgba(200,160,64,.35);text-align:center;font-family:'Heebo',sans-serif}
+.floor-num.active{color:var(--gold);font-weight:700}
+.elevator-cabin{position:absolute;bottom:-80px;right:36px;left:8px;height:72px;
+  background:linear-gradient(135deg,rgba(200,160,64,.08),rgba(200,160,64,.04));
+  border:1px solid rgba(200,160,64,.25);display:flex;align-items:center;justify-content:center;
+  animation:liftUp 3s 1.5s ease-in-out forwards}
+@keyframes liftUp{from{bottom:-80px}to{bottom:220px}}
+.cabin-inner{width:24px;height:24px;border-radius:50%;background:rgba(200,160,64,.15);border:1px solid rgba(200,160,64,.3)}
+.elevator-doors{position:absolute;top:220px;right:36px;left:8px;height:72px;display:flex;overflow:hidden;pointer-events:none}
+.door-panel{width:50%;height:100%;background:rgba(30,20,8,.9);border:1px solid rgba(200,160,64,.15);
+  transition:transform 1.5s 4.8s ease-in-out}
+.door-panel.left{transform-origin:left;border-right:none}
+.door-panel.right{transform-origin:right;border-left:none}
+.doors-open .door-panel.left{transform:translateX(-100%)}
+.doors-open .door-panel.right{transform:translateX(100%)}
+.elev-floor-display{font-size:13px;letter-spacing:.18em;color:var(--dim);margin-bottom:24px}
+.elev-floor-display span{color:var(--gold);font-weight:700}
+/* Door opening screen */
+#intro-3{background:#0c0a08;display:flex;align-items:center;justify-content:center}
+.big-door{width:340px;height:420px;position:relative;display:flex;overflow:hidden}
+.door-half{width:50%;height:100%;background:linear-gradient(160deg,#1a1208,#0c0a06);
+  border:1px solid rgba(200,160,64,.2);transition:transform 1.6s 0.5s ease-in-out;
+  display:flex;align-items:center;justify-content:center}
+.door-open .door-half:first-child{transform:translateX(-100%)}
+.door-open .door-half:last-child{transform:translateX(100%)}
+.door-room{position:absolute;inset:0;opacity:0;transition:opacity 1s 1.8s}
+.door-room img{width:100%;height:100%;object-fit:cover;filter:brightness(.7)}
+.door-open .door-room{opacity:1}
+.door-ornament{font-size:28px;color:rgba(200,160,64,.3)}
+
+/* ════════════════════════
+   S1 — TED OPENER
+════════════════════════ */
+#s1{background:radial-gradient(ellipse at 60% 50%,rgba(40,24,6,.9),rgba(8,6,4,.98))}
+.ted-wrap{display:grid;grid-template-columns:1fr 360px;gap:48px;max-width:900px;align-items:center}
+.ted-text{}
+.ted-label{font-size:11px;letter-spacing:.22em;color:var(--amber);margin-bottom:20px;font-weight:500}
+.ted-title{font-size:42px;font-weight:900;line-height:1.15;margin-bottom:22px;color:var(--cream)}
+.ted-title em{color:var(--gold);font-style:normal}
+.ted-.ted-body strong{color:var(--cream);font-weight:500}
+.ted-quote{border-right:3px solid var(--gold);padding-right:20px;margin:20px 0;
+  font-size:17px;font-style:italic;color:var(--cream);line-height:1.7;font-weight:300}
+.peres-card{background:rgba(30,18,4,.8);border:1px solid rgba(200,160,64,.2);padding:24px;text-align:center}
+.peres-img{width:100%;height:260px;object-fit:cover;object-position:50% 15%;filter:sepia(.15) brightness(.85);margin-bottom:16px}
+.peres-dates{font-size:12px;letter-spacing:.12em;color:var(--dim)}
+.loss-counter{display:flex;gap:8px;justify-content:center;margin:14px 0;flex-wrap:wrap}
+.loss-pill{font-size:11px;padding:4px 12px;border:1px solid rgba(200,160,64,.3);color:var(--dim)}
+.loss-pill.win{border-color:var(--gold);color:var(--gold)}
+
+/* ════════════════════════
+   S2 — DILEMMAS
+════════════════════════ */
+#s2{background:radial-gradient(ellipse at 50% 60%,rgba(30,16,4,.9),rgba(8,6,4,.98))}
+.dilemma-wrap{max-width:740px;width:100%}
+.dilemma-progress{font-size:12px;color:var(--faint);margin-bottom:8px;letter-spacing:.08em}
+.dilemma-icon{font-size:48px;margin-bottom:18px;display:block}
+.dilemma-q{font-size:24px;font-weight:700;color:var(--cream);line-height:1.4;margin-bottom:28px}
+.dilemma-opts{display:flex;flex-direction:column;gap:12px;margin-bottom:0}
+.dopt{background:rgba(30,18,4,.6);border:1px solid rgba(240,228,192,.1);padding:16px 22px;
+  font-size:15px;color:var(--dim);cursor:pointer;transition:all .25s;text-align:right;
+  font-family:'Heebo',sans-serif;width:100%;display:flex;gap:12px;align-items:center}
+.dopt:hover{border-color:rgba(200,160,64,.35);color:var(--cream);background:rgba(200,160,64,.06)}
+.dopt .dopt-bullet{width:8px;height:8px;border-radius:50%;border:1px solid var(--gold);flex-shrink:0}
+.dopt.chosen{border-color:var(--gold);color:var(--gold);background:rgba(200,160,64,.1)}
+.dopt.chosen .dopt-bullet{background:var(--gold)}
+.peres-response{background:rgba(30,18,4,.95);border:1px solid rgba(200,160,64,.25);
+  padding:22px 24px;margin-top:18px;opacity:0;transform:translateY(8px);
+  transition:all .5s;pointer-events:none}
+.peres-response.show{opacity:1;transform:translateY(0);pointer-events:all}
+.peres-resp-label{font-size:10px;letter-spacing:.18em;color:var(--gold);margin-bottom:8px}
+.peres-resp-text{font-size:15px;font-weight:300;color:var(--cream);line-height:1.75;font-style:italic}
+.dilemma-next{margin-top:16px;width:100%;justify-content:center;opacity:0;transition:opacity .4s .3s}
+.dilemma-next.show{opacity:1}
+
+/* ════════════════════════
+   S3 — DREAM MACHINE
+════════════════════════ */
+#s3{background:radial-gradient(ellipse at 50% 40%,rgba(35,18,4,.9),rgba(8,6,4,.98))}
+.dream-gate{max-width:580px;text-align:center}
+.dream-gate h2{font-size:30px;font-weight:800;color:var(--cream);margin-bottom:12px}
+.dream-gate p{font-size:16px;color:var(--dim);margin-bottom:32px;line-height:1.7}
+.gate-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* Path A — Know your dream */
+.dream-input-wrap{max-width:600px;width:100%;opacity:0;height:0;overflow:hidden;transition:all .4s}
+.dream-input-wrap.show{opacity:1;height:auto}
+.dream-label{font-size:13px;color:var(--dim);margin-bottom:10px;letter-spacing:.04em}
+.dream-input{width:100%;background:rgba(30,18,4,.8);border:1px solid rgba(240,228,192,.15);
+  color:var(--cream);font-family:'Heebo',sans-serif;font-size:18px;padding:18px 20px;
+  outline:none;resize:none;height:80px;direction:rtl;transition:border .25s}
+.dream-input:focus{border-color:rgba(200,160,64,.5)}
+.dream-input::placeholder{color:rgba(240,228,192,.2);font-size:16px}
+.char-hint{font-size:11px;color:var(--faint);text-align:left;margin-top:6px}
+
+/* Path B — Machine */
+.machine-wrap{max-width:680px;width:100%;opacity:0;height:0;overflow:hidden;transition:all .4s}
+.machine-wrap.show{opacity:1;height:auto}
+.mstep{opacity:0;transform:translateY(12px);transition:all .5s;margin-bottom:20px}
+.mstep.show{opacity:1;transform:translateY(0)}
+.mstep-label{font-size:11px;letter-spacing:.18em;color:var(--gold);margin-bottom:10px;font-weight:600}
+.mcards{display:flex;gap:10px;flex-wrap:wrap}
+.mcard{background:rgba(30,18,4,.6);border:1px solid rgba(240,228,192,.1);padding:11px 16px;
+  font-size:14px;color:var(--dim);cursor:pointer;transition:all .22s;font-family:'Heebo',sans-serif}
+.mcard:hover{border-color:rgba(200,160,64,.4);color:var(--cream);background:rgba(200,160,64,.07)}
+.mcard.chosen{border-color:var(--gold);color:var(--gold);background:rgba(200,160,64,.12);font-weight:600}
+.thread-preview{display:flex;gap:12px;align-items:center;margin-top:20px;
+  opacity:0;flex-wrap:wrap;justify-content:center;transition:opacity .4s}
+.thread-preview.show{opacity:1}
+.thread-bead{font-size:13px;color:var(--gold);padding:7px 14px;border:1px solid rgba(200,160,64,.35);
+  background:rgba(200,160,64,.07);font-weight:500}
+.thread-dash{width:20px;height:1px;background:rgba(200,160,64,.4)}
+
+/* ════════════════════════
+   S4 — WALL OF DREAMS
+════════════════════════ */
+#s4{background:#040302;padding:0}
+#wallCanvas{position:absolute;inset:0}
+.wall-ui{position:relative;z-index:3;text-align:center;pointer-events:none}
+.wall-title{font-size:15px;letter-spacing:.18em;color:var(--gold);font-weight:500;margin-bottom:6px}
+.wall-sub{font-size:13px;color:var(--faint);margin-bottom:0}
+.wall-hint{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);
+  font-size:12px;color:var(--faint);letter-spacing:.08em;z-index:4}
+.wall-btns{position:absolute;bottom:100px;left:50%;transform:translateX(-50%);
+  display:flex;gap:12px;z-index:4;opacity:0;transition:opacity .8s 1.5s}
+.wall-btns.show{opacity:1}
+
+/* ── FADE ── */
+#tourFade{position:absolute;inset:0;background:#080604;opacity:0;pointer-events:none;z-index:200;transition:opacity .45s}
+#tourFade.dark{opacity:1}
+
+
+
+
+/* TOUR CSS */
+#tour-overlay{position:fixed;inset:0;z-index:2000;overflow:hidden}
+
+#tour-overlay{
+  --bg:    #080604;
+  --warm:  #1a1208;
+  --gold:  #c8a040;
+  --gold2: #f0c060;
+  --cream: #f0e4c0;
+  --amber: #c87830;
+  --dim:   rgba(240,228,192,.6);
+  --faint: rgba(240,228,192,.28);
+  --card:  rgba(30,20,8,.85);
+}
+/* ── UTILITY ── */
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .7s ease;padding:28px 24px;z-index:2}
+.screen.active{opacity:1;pointer-events:all}
+.tag{font-size:11px;letter-spacing:.22em;color:var(--gold);font-weight:500;margin-bottom:12px;opacity:.85}
+.jbtn{display:inline-flex;align-items:center;gap:8px;padding:13px 32px;font-family:'Heebo',sans-serif;
+  font-size:14px;font-weight:600;letter-spacing:.04em;cursor:pointer;border:none;transition:all .25s}
+.jbtn-gold{background:var(--gold);color:#1a0800}
+.jbtn-gold:hover{background:var(--gold2);transform:translateY(-1px);box-shadow:0 4px 22px rgba(200,160,64,.4)}
+.jbtn-outline{background:transparent;border:1px solid rgba(240,228,192,.25);color:var(--dim)}
+.jbtn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.jbtn-sm{padding:9px 20px;font-size:13px}
+
+/* ── BACKGROUND CANVAS ── */
+#tourBgCanvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ── MUSIC / BACK CONTROLS ── */
+#tourControls{position:fixed;top:16px;left:16px;z-index:300;display:flex;gap:8px}
+.tourCtrlBtn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.12);color:var(--dim);font-size:14px;cursor:pointer;
+  transition:all .2s;display:flex;align-items:center;justify-content:center;font-family:'Heebo',sans-serif}
+.tourCtrlBtn:hover{background:rgba(200,160,64,.15);border-color:var(--gold);color:var(--gold)}
+.tourCtrlBtn.hidden{opacity:0;pointer-events:none}
+
+/* ── PROGRESS ── */
+#tourProgress{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+  display:flex;gap:10px;z-index:100;align-items:center}
+.tdot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.18);transition:all .35s}
+.tdot.done{background:rgba(200,160,64,.5)}
+.tdot.active{background:var(--gold);width:18px;border-radius:3px}
+
+/* ════════════════════════
+   S0 — CINEMATIC INTRO
+════════════════════════ */
+#s0{padding:0;z-index:10}
+.intro-stage{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease;overflow:hidden}
+.intro-stage.show{opacity:1}
+.intro-img{width:100%;height:100%;object-fit:cover;object-position:center}
+.ken-burns{animation:kb 8s ease-in-out forwards}
+.ken-right{animation:kbr 8s ease-in-out forwards}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.1)}}
+@keyframes kbr{from{transform:scale(1) translateX(0)}to{transform:scale(1.08) translateX(2%)}}
+.intro-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,6,4,.9) 0%,rgba(8,6,4,.35) 60%,rgba(8,6,4,.2) 100%)}
+.intro-caption{position:absolute;bottom:80px;right:48px;text-align:right}
+.intro-caption h2{font-size:32px;font-weight:700;color:var(--cream);margin-bottom:6px}
+.intro-caption p{font-size:14px;color:var(--dim);letter-spacing:.1em}
+/* Elevator stage */
+#intro-2{background:#0c0a08;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.elevator-shaft{width:140px;height:320px;border:1px solid rgba(200,160,64,.2);position:relative;overflow:hidden;background:#0a0806}
+.elevator-floors{position:absolute;right:0;top:0;width:32px;height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:8px 0;border-right:1px solid rgba(200,160,64,.1)}
+.floor-num{font-size:11px;color:rgba(200,160,64,.35);text-align:center;font-family:'Heebo',sans-serif}
+.floor-num.active{color:var(--gold);font-weight:700}
+.elevator-cabin{position:absolute;bottom:-80px;right:36px;left:8px;height:72px;
+  background:linear-gradient(135deg,rgba(200,160,64,.08),rgba(200,160,64,.04));
+  border:1px solid rgba(200,160,64,.25);display:flex;align-items:center;justify-content:center;
+  animation:liftUp 3s 1.5s ease-in-out forwards}
+@keyframes liftUp{from{bottom:-80px}to{bottom:220px}}
+.cabin-inner{width:24px;height:24px;border-radius:50%;background:rgba(200,160,64,.15);border:1px solid rgba(200,160,64,.3)}
+.elevator-doors{position:absolute;top:220px;right:36px;left:8px;height:72px;display:flex;overflow:hidden;pointer-events:none}
+.door-panel{width:50%;height:100%;background:rgba(30,20,8,.9);border:1px solid rgba(200,160,64,.15);
+  transition:transform 1.5s 4.8s ease-in-out}
+.door-panel.left{transform-origin:left;border-right:none}
+.door-panel.right{transform-origin:right;border-left:none}
+.doors-open .door-panel.left{transform:translateX(-100%)}
+.doors-open .door-panel.right{transform:translateX(100%)}
+.elev-floor-display{font-size:13px;letter-spacing:.18em;color:var(--dim);margin-bottom:24px}
+.elev-floor-display span{color:var(--gold);font-weight:700}
+/* Door opening screen */
+#intro-3{background:#0c0a08;display:flex;align-items:center;justify-content:center}
+.big-door{width:340px;height:420px;position:relative;display:flex;overflow:hidden}
+.door-half{width:50%;height:100%;background:linear-gradient(160deg,#1a1208,#0c0a06);
+  border:1px solid rgba(200,160,64,.2);transition:transform 1.6s 0.5s ease-in-out;
+  display:flex;align-items:center;justify-content:center}
+.door-open .door-half:first-child{transform:translateX(-100%)}
+.door-open .door-half:last-child{transform:translateX(100%)}
+.door-room{position:absolute;inset:0;opacity:0;transition:opacity 1s 1.8s}
+.door-room img{width:100%;height:100%;object-fit:cover;filter:brightness(.7)}
+.door-open .door-room{opacity:1}
+.door-ornament{font-size:28px;color:rgba(200,160,64,.3)}
+
+/* ════════════════════════
+   S1 — TED OPENER
+════════════════════════ */
+#s1{background:radial-gradient(ellipse at 60% 50%,rgba(40,24,6,.9),rgba(8,6,4,.98))}
+.ted-wrap{display:grid;grid-template-columns:1fr 360px;gap:48px;max-width:900px;align-items:center}
+.ted-text{}
+.ted-label{font-size:11px;letter-spacing:.22em;color:var(--amber);margin-bottom:20px;font-weight:500}
+.ted-title{font-size:42px;font-weight:900;line-height:1.15;margin-bottom:22px;color:var(--cream)}
+.ted-title em{color:var(--gold);font-style:normal}
+.ted-.ted-body strong{color:var(--cream);font-weight:500}
+.ted-quote{border-right:3px solid var(--gold);padding-right:20px;margin:20px 0;
+  font-size:17px;font-style:italic;color:var(--cream);line-height:1.7;font-weight:300}
+.peres-card{background:rgba(30,18,4,.8);border:1px solid rgba(200,160,64,.2);padding:24px;text-align:center}
+.peres-img{width:100%;height:260px;object-fit:cover;object-position:50% 15%;filter:sepia(.15) brightness(.85);margin-bottom:16px}
+.peres-dates{font-size:12px;letter-spacing:.12em;color:var(--dim)}
+.loss-counter{display:flex;gap:8px;justify-content:center;margin:14px 0;flex-wrap:wrap}
+.loss-pill{font-size:11px;padding:4px 12px;border:1px solid rgba(200,160,64,.3);color:var(--dim)}
+.loss-pill.win{border-color:var(--gold);color:var(--gold)}
+
+/* ════════════════════════
+   S2 — DILEMMAS
+════════════════════════ */
+#s2{background:radial-gradient(ellipse at 50% 60%,rgba(30,16,4,.9),rgba(8,6,4,.98))}
+.dilemma-wrap{max-width:740px;width:100%}
+.dilemma-progress{font-size:12px;color:var(--faint);margin-bottom:8px;letter-spacing:.08em}
+.dilemma-icon{font-size:48px;margin-bottom:18px;display:block}
+.dilemma-q{font-size:24px;font-weight:700;color:var(--cream);line-height:1.4;margin-bottom:28px}
+.dilemma-opts{display:flex;flex-direction:column;gap:12px;margin-bottom:0}
+.dopt{background:rgba(30,18,4,.6);border:1px solid rgba(240,228,192,.1);padding:16px 22px;
+  font-size:15px;color:var(--dim);cursor:pointer;transition:all .25s;text-align:right;
+  font-family:'Heebo',sans-serif;width:100%;display:flex;gap:12px;align-items:center}
+.dopt:hover{border-color:rgba(200,160,64,.35);color:var(--cream);background:rgba(200,160,64,.06)}
+.dopt .dopt-bullet{width:8px;height:8px;border-radius:50%;border:1px solid var(--gold);flex-shrink:0}
+.dopt.chosen{border-color:var(--gold);color:var(--gold);background:rgba(200,160,64,.1)}
+.dopt.chosen .dopt-bullet{background:var(--gold)}
+.peres-response{background:rgba(30,18,4,.95);border:1px solid rgba(200,160,64,.25);
+  padding:22px 24px;margin-top:18px;opacity:0;transform:translateY(8px);
+  transition:all .5s;pointer-events:none}
+.peres-response.show{opacity:1;transform:translateY(0);pointer-events:all}
+.peres-resp-label{font-size:10px;letter-spacing:.18em;color:var(--gold);margin-bottom:8px}
+.peres-resp-text{font-size:15px;font-weight:300;color:var(--cream);line-height:1.75;font-style:italic}
+.dilemma-next{margin-top:16px;width:100%;justify-content:center;opacity:0;transition:opacity .4s .3s}
+.dilemma-next.show{opacity:1}
+
+/* ════════════════════════
+   S3 — DREAM MACHINE
+════════════════════════ */
+#s3{background:radial-gradient(ellipse at 50% 40%,rgba(35,18,4,.9),rgba(8,6,4,.98))}
+.dream-gate{max-width:580px;text-align:center}
+.dream-gate h2{font-size:30px;font-weight:800;color:var(--cream);margin-bottom:12px}
+.dream-gate p{font-size:16px;color:var(--dim);margin-bottom:32px;line-height:1.7}
+.gate-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* Path A — Know your dream */
+.dream-input-wrap{max-width:600px;width:100%;opacity:0;height:0;overflow:hidden;transition:all .4s}
+.dream-input-wrap.show{opacity:1;height:auto}
+.dream-label{font-size:13px;color:var(--dim);margin-bottom:10px;letter-spacing:.04em}
+.dream-input{width:100%;background:rgba(30,18,4,.8);border:1px solid rgba(240,228,192,.15);
+  color:var(--cream);font-family:'Heebo',sans-serif;font-size:18px;padding:18px 20px;
+  outline:none;resize:none;height:80px;direction:rtl;transition:border .25s}
+.dream-input:focus{border-color:rgba(200,160,64,.5)}
+.dream-input::placeholder{color:rgba(240,228,192,.2);font-size:16px}
+.char-hint{font-size:11px;color:var(--faint);text-align:left;margin-top:6px}
+
+/* Path B — Machine */
+.machine-wrap{max-width:680px;width:100%;opacity:0;height:0;overflow:hidden;transition:all .4s}
+.machine-wrap.show{opacity:1;height:auto}
+.mstep{opacity:0;transform:translateY(12px);transition:all .5s;margin-bottom:20px}
+.mstep.show{opacity:1;transform:translateY(0)}
+.mstep-label{font-size:11px;letter-spacing:.18em;color:var(--gold);margin-bottom:10px;font-weight:600}
+.mcards{display:flex;gap:10px;flex-wrap:wrap}
+.mcard{background:rgba(30,18,4,.6);border:1px solid rgba(240,228,192,.1);padding:11px 16px;
+  font-size:14px;color:var(--dim);cursor:pointer;transition:all .22s;font-family:'Heebo',sans-serif}
+.mcard:hover{border-color:rgba(200,160,64,.4);color:var(--cream);background:rgba(200,160,64,.07)}
+.mcard.chosen{border-color:var(--gold);color:var(--gold);background:rgba(200,160,64,.12);font-weight:600}
+.thread-preview{display:flex;gap:12px;align-items:center;margin-top:20px;
+  opacity:0;flex-wrap:wrap;justify-content:center;transition:opacity .4s}
+.thread-preview.show{opacity:1}
+.thread-bead{font-size:13px;color:var(--gold);padding:7px 14px;border:1px solid rgba(200,160,64,.35);
+  background:rgba(200,160,64,.07);font-weight:500}
+.thread-dash{width:20px;height:1px;background:rgba(200,160,64,.4)}
+
+/* ── MACHINE HANDLE ── */
+.handle-wrap{display:flex;flex-direction:column;align-items:center;cursor:pointer;
+  margin:18px auto 0;width:fit-content;transition:transform .2s;user-select:none}
+.handle-wrap:hover{transform:translateY(4px)}
+.handle-wrap.pulled{transform:translateY(18px);transition:transform .12s}
+.handle-knob{width:46px;height:46px;border-radius:50%;
+  background:radial-gradient(circle at 38% 35%,var(--gold2),var(--amber));
+  border:2px solid rgba(200,160,64,.55);
+  box-shadow:0 0 18px rgba(200,160,64,.35),inset 0 1px 0 rgba(255,255,255,.15)}
+.handle-rod{width:7px;height:54px;
+  background:linear-gradient(to bottom,var(--gold),rgba(200,160,64,.25));
+  border-radius:0 0 3px 3px}
+.handle-base{width:36px;height:10px;border-radius:4px;
+  background:rgba(200,160,64,.2);border:1px solid rgba(200,160,64,.3)}
+.handle-label{font-size:10px;letter-spacing:.14em;color:var(--faint);margin-top:8px;font-weight:500}
+
+/* ════════════════════════
+   S4 — WALL OF DREAMS
+════════════════════════ */
+#s4{background:#040302;padding:0}
+#wallCanvas{position:absolute;inset:0}
+.wall-ui{position:relative;z-index:3;text-align:center;pointer-events:none}
+.wall-title{font-size:15px;letter-spacing:.18em;color:var(--gold);font-weight:500;margin-bottom:6px}
+.wall-sub{font-size:13px;color:var(--faint);margin-bottom:0}
+.wall-hint{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);
+  font-size:12px;color:var(--faint);letter-spacing:.08em;z-index:4}
+.wall-btns{position:absolute;bottom:100px;left:50%;transform:translateX(-50%);
+  display:flex;gap:12px;z-index:4;opacity:0;transition:opacity .8s 1.5s}
+.wall-btns.show{opacity:1}
+
+/* ── FADE ── */
+#tourFade{position:absolute;inset:0;background:#080604;opacity:0;pointer-events:none;z-index:200;transition:opacity .45s}
+#tourFade.dark{opacity:1}
+
+#tour-overlay{color:var(--cream);font-family:'Heebo',sans-serif;direction:rtl}
+#tour-overlay h1,#tour-overlay h2,#tour-overlay h3,#tour-overlay h4{color:inherit;font-size:inherit;font-weight:inherit;line-height:inherit}
+#tour-overlay p{color:var(--dim);font-size:inherit;line-height:inherit}
+#tour-overlay a{color:inherit;text-decoration:none}
+#tour-overlay button{font-family:'Heebo',sans-serif}
+
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">דלג לתוכן הראשי</a>
+
+<!-- ══ HEADER ══ -->
+<header id="site-header" role="banner">
+  <div class="header-top">
+    <div class="container">
+      <div class="header-top-links">
+        <a href="#">צרו קשר</a>
+        <a href="#">נגישות</a>
+        <a href="#">מפת האתר</a>
+        <a href="#">דוברות ומדיה</a>
+      </div>
+      <div class="flex-center" style="gap:16px">
+        <div class="header-lang">
+          <a href="#" style="margin-left:6px">עברית</a>
+          <a href="#">English</a>
+          <a href="#">العربية</a>
+        </div>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="פייסבוק">f</a>
+          <a href="#" class="social-link" aria-label="טוויטר">𝕏</a>
+          <a href="#" class="social-link" aria-label="אינסטגרם">◎</a>
+          <a href="#" class="social-link" aria-label="יוטיוב">▶</a>
+          <a href="#" class="social-link" aria-label="לינקדאין">in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="header-main">
+    <div class="container">
+      <a href="#" class="site-logo" aria-label="מרכז פרס לשלום ולחדשנות — דף הבית">
+        <div class="logo-emblem">פ</div>
+        <div>
+          <div class="logo-text-he">מרכז פרס לשלום ולחדשנות</div>
+          <div class="logo-text-en">Peres Center for Peace and Innovation</div>
+        </div>
+      </a>
+      <nav class="main-nav" role="navigation" aria-label="ניווט ראשי">
+        <div class="nav-item">
+          <button class="nav-link">על המרכז <span class="arrow">▾</span></button>
+          <div class="dropdown">
+            <a href="#about" class="dd-item">מי אנחנו</a>
+            <a href="#" class="dd-item">חזון ושליחות</a>
+            <a href="#" class="dd-item">הנהלה ומועצה</a>
+            <a href="#about" class="dd-item">שמעון פרס</a>
+            <a href="#" class="dd-item">שקיפות ודיווחים</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">תוכניות <span class="arrow">▾</span></button>
+          <div class="dropdown">
+            <a href="#programs" class="dd-item">שלום ואבטחה</a>
+            <a href="#programs" class="dd-item">חדשנות ויזמות</a>
+            <a href="#programs" class="dd-item">שיתוף פעולה ערבי-יהודי</a>
+            <a href="#programs" class="dd-item">תוכניות נוער</a>
+            <a href="#programs" class="dd-item">מחקר ופרסום</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#education" class="nav-link">חינוך</a>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">גלריה <span class="arrow">▾</span></button>
+          <div class="dropdown">
+            <a href="intro.html" class="dd-item">מסע וירטואלי</a>
+            <a href="#" class="dd-item">ארכיון תצלומים</a>
+            <a href="#" class="dd-item">סרטים ומולטימדיה</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">חדשות <span class="arrow">▾</span></button>
+          <div class="dropdown">
+            <a href="#news" class="dd-item">חדשות ועדכונים</a>
+            <a href="#events" class="dd-item">אירועים קרובים</a>
+            <a href="#" class="dd-item">הודעות לעיתונות</a>
+            <a href="#" class="dd-item">ניוזלטר</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#visit" class="nav-link">ביקור</a>
+        </div>
+        <div class="nav-item">
+          <a href="#support" class="nav-link">תמיכה</a>
+        </div>
+      </nav>
+      <div class="header-cta">
+        <a href="#visit" class="btn btn-secondary" style="padding:10px 20px;font-size:13px">קנו כרטיסים</a>
+        <a href="#support" class="btn btn-primary" style="padding:10px 20px;font-size:13px">תרמו עכשיו</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ══ HERO ══ -->
+<section id="hero" aria-label="באנר ראשי">
+  <div class="hero-bg">
+    <img src="https://res.cloudinary.com/dmr8zhfer/image/upload/f_auto,q_auto/peres_room_main_xpo9zv" alt="מרכז פרס לשלום ולחדשנות — מבט על תל אביב">
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-tag">מרכז פרס לשלום ולחדשנות · תל אביב</div>
+      <h1 class="hero-title">לחלום בגדול.<br>לשנות <span>את העולם</span>.</h1>
+      <p class="hero-desc">מרכז החדשנות של ישראל — מסע מרתק וחווייתי בעקבות החדשנות הישראלית על פי חזונו של הנשיא שמעון פרס.</p>
+      <div class="hero-btns">
+        <a href="#programs" class="btn btn-primary">גלו את התוכניות שלנו</a>
+        <a href="intro.html" class="btn btn-outline-white">מסע וירטואלי ←</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats" aria-label="נתוני המרכז">
+    <div class="container">
+      <div class="stat-item"><div class="stat-num">40+</div><div class="stat-label">שנות פעילות</div></div>
+      <div class="stat-item"><div class="stat-num">120</div><div class="stat-label">מדינות שותפות</div></div>
+      <div class="stat-item"><div class="stat-num">1M+</div><div class="stat-label">משתתפים בתוכניות</div></div>
+      <div class="stat-item"><div class="stat-num">300+</div><div class="stat-label">פרויקטים פעילים</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ QUOTE ══ -->
+<div class="quote-section">
+  <div class="container">
+    <div class="quote-inner">
+      <blockquote class="big-quote">
+        "הדמיון הוא משאב הטבע היחיד שאין לו גבול. ישראל חסרת משאבי טבע, אבל <strong>עשירה בדמיון</strong>."
+      </blockquote>
+      <cite class="big-cite">שמעון פרס · נשיא ישראל התשיעי · זוכה פרס נובל לשלום 1994</cite>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ABOUT ══ -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="grid-2">
+      <div>
+        <div class="section-tag">מי אנחנו</div>
+        <h2 class="section-title">שלום וחדשנות — שני פנים של אותו מטבע</h2>
+        <div class="divider"></div>
+        <p style="margin-bottom:18px">מרכז פרס לשלום ולחדשנות הוא מרכז החדשנות של ישראל — מוסד ייחודי שמביא את רוח ה-Start-Up Nation לקידום שיתוף פעולה אזורי ובינלאומי. המרכז פועל ביותר מ-50 מדינות, ומחבר בין מנהיגים, יזמים, מחנכים ואזרחים.</p>
+        <p>הוקם על שמו של שמעון פרס, איש חזון שהאמין כי שלום ופריחה כלכלית הם שניים שאינם ניתנים לפירוד. המרכז ממשיך את מורשתו בבניית גשרים בין עמים.</p>
+        <div style="margin-top:28px;display:flex;gap:14px;flex-wrap:wrap">
+          <a href="#" class="btn btn-primary">קראו עוד על המרכז</a>
+          <div class="peres-panel">
+            <button class="btn btn-secondary" style="cursor:pointer">שמעון פרס — הסיפור ▾</button>
+            <div class="peres-menu">
+              <a href="concept.html#s3"><span class="peres-menu-icon">📖</span> ביוגרפיה</a>
+              <a href="concept.html#s5"><span class="peres-menu-icon">🗄️</span> ארכיון</a>
+              <a href="intro.html"><span class="peres-menu-icon">🌐</span> מסע וירטואלי</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Shimon_Peres_2011_%28cropped%29.jpg/600px-Shimon_Peres_2011_%28cropped%29.jpg"
+          style="width:100%;height:420px;object-fit:cover;object-position:50% 12%;filter:sepia(.06)"
+          alt="שמעון פרס" onerror="this.style.background='var(--blue-pale)';this.alt='תמונת שמעון פרס'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROGRAMS ══ -->
+<section id="programs" class="section section-alt">
+  <div class="container">
+    <div class="section-header-row">
+      <div>
+        <div class="section-tag">תוכניות ופרויקטים</div>
+        <h2 class="section-title">מה אנחנו עושים</h2>
+        <div class="divider"></div>
+      </div>
+      <a href="#" class="view-all">כל התוכניות →</a>
+    </div>
+    <div class="grid-3" style="margin-bottom:24px">
+      <div class="prog-card">
+        <div class="prog-icon">🕊️</div>
+        <h3>שלום ואבטחה אזורית</h3>
+        <p>דיאלוג ישראלי-פלסטיני, שיתוף פעולה ביטחוני, בניית אמון בין עמים שכנים במזרח התיכון.</p>
+        <div class="prog-link">גלו עוד <span>→</span></div>
+      </div>
+      <div class="prog-card">
+        <div class="prog-icon">🚀</div>
+        <h3>חדשנות ויזמות</h3>
+        <p>תוכניות ישראליות-פלסטיניות בהיי-טק, חקלאות, מים, רפואה וטכנולוגיה. Start-Up Nation לכולם.</p>
+        <div class="prog-link">גלו עוד <span>→</span></div>
+      </div>
+      <div class="prog-card">
+        <div class="prog-icon">🤝</div>
+        <h3>שיתוף פעולה ערבי-יהודי</h3>
+        <p>פרויקטים משותפים בין אזרחים יהודים וערבים בישראל — ספורט, עסקים, חינוך, תרבות.</p>
+        <div class="prog-link">גלו עוד <span>→</span></div>
+      </div>
+    </div>
+    <div class="grid-3">
+      <div class="prog-card">
+        <div class="prog-icon">📚</div>
+        <h3>חינוך למנהיגות</h3>
+        <p>תוכניות לנוער, מורים ומנהיגים עתידיים — בישראל, בשטחים ובמדינות ערב.</p>
+        <div class="prog-link">גלו עוד <span>→</span></div>
+      </div>
+      <div class="prog-card">
+        <div class="prog-icon">💧</div>
+        <h3>מים, חקלאות וסביבה</h3>
+        <p>פרויקטים ישראלים-ירדנים-פלסטיניים בניהול מים, חקלאות בת-קיימא, ואנרגיה ירוקה.</p>
+        <div class="prog-link">גלו עוד <span>→</span></div>
+      </div>
+      <div class="prog-card">
+        <div class="prog-icon">🔬</div>
+        <h3>מחקר ופרסום</h3>
+        <p>מחקר אקדמי על שלום, חדשנות ויחסים בין-לאומיים. דוחות, כנסים ופרסומים מדעיים.</p>
+        <div class="prog-link">גלו עוד <span>→</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ VIRTUAL TOUR ══ -->
+<section id="virtual-tour" class="vt-section">
+  <div class="container">
+    <div class="vt-inner">
+      <div>
+        <div class="vt-label">חוויה אינטראקטיבית</div>
+        <h2 class="vt-title">המסע הווירטואלי</h2>
+        <p class="vt-desc">מסע חוצה ישראל — אקוסיסטם חברתי ותרבותי. צאו למסע מג'דל שמס דרך תל חי ועד קרית שמונה, בעקבות חדשנות, חיבורים ושיתוף פעולה.</p>
+        <div class="vt-features">
+          <div class="vt-feat"><div class="vt-feat-icon">🌉</div> גשר החיבורים — פתחו את הדרך</div>
+          <div class="vt-feat"><div class="vt-feat-icon">🎓</div> מגנט הבוגרים — שמרו על הכישרונות</div>
+          <div class="vt-feat"><div class="vt-feat-icon">🧩</div> פאזל החלום — בנו יחד חזון</div>
+          <div class="vt-feat"><div class="vt-feat-icon">🗺️</div> מסע אינטראקטיבי חוצה הגליל</div>
+        </div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
+          <a href="intro.html" class="btn btn-primary">🧭 התחילו מסע ▶</a>
+          <a href="concept.html#s3" class="btn btn-outline-white">📖 ביוגרפיה</a>
+          <a href="concept.html#s5" class="btn btn-outline-white">🗄️ ארכיון</a>
+        </div>
+      </div>
+      <div class="vt-preview">
+        <div class="vt-screen">
+          <img src="https://res.cloudinary.com/dmr8zhfer/image/upload/f_auto,q_auto/peres_room_main_xpo9zv" alt="תצוגה מקדימה של הסיור הווירטואלי">
+          <div class="vt-play">
+            <div class="vt-play-btn" onclick="location.href='intro.html'" role="button" tabindex="0" aria-label="התחילו מסע וירטואלי">▶</div>
+            <span>לחצו להתחלת המסע</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ NEWS ══ -->
+<section id="news" class="section">
+  <div class="container">
+    <div class="section-header-row">
+      <div>
+        <div class="section-tag">עדכונים אחרונים</div>
+        <h2 class="section-title">חדשות ומאמרים</h2>
+        <div class="divider"></div>
+      </div>
+      <a href="#" class="view-all">כל החדשות →</a>
+    </div>
+    <div class="grid-3">
+      <article class="news-card">
+        <div class="news-img-placeholder">🌱</div>
+        <div class="news-body">
+          <div class="news-cat">חדשנות</div>
+          <h3>מרכז פרס משיק תוכנית סטארטאפ ישראלית-פלסטינית חדשה</h3>
+          <p>50 יזמים מישראל ומהרשות הפלסטינית יפתחו פתרונות טכנולוגיים משותפים בתחומי מים ובריאות.</p>
+          <div class="news-date">15 בינואר 2025</div>
+        </div>
+      </article>
+      <article class="news-card">
+        <div class="news-img-placeholder">🎓</div>
+        <div class="news-body">
+          <div class="news-cat">חינוך</div>
+          <h3>תוכנית הנוער "מחר" חוגגת 20 שנה — 100,000 בוגרים</h3>
+          <p>שני עשורים של בניית גשרים בין נוער יהודי וערבי: כנס מיוחד בתל אביב.</p>
+          <div class="news-date">8 בינואר 2025</div>
+        </div>
+      </article>
+      <article class="news-card">
+        <div class="news-img-placeholder">🤝</div>
+        <div class="news-body">
+          <div class="news-cat">שלום</div>
+          <h3>פורום המנהיגים לשלום 2025 יתקיים בתל אביב בפברואר</h3>
+          <p>40 מנהיגים מ-20 מדינות יישתפו פעולה בסוגיות שלום, ביטחון ופיתוח בר-קיימא.</p>
+          <div class="news-date">3 בינואר 2025</div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EVENTS ══ -->
+<section id="events" class="section section-alt">
+  <div class="container">
+    <div class="grid-2" style="align-items:start;gap:60px">
+      <div>
+        <div class="section-tag">יומן אירועים</div>
+        <h2 class="section-title">אירועים קרובים</h2>
+        <div class="divider"></div>
+        <div style="margin-top:28px">
+          <div class="event-row">
+            <div class="event-date-box"><div class="event-day">22</div><div class="event-month">ינואר</div></div>
+            <div class="event-info">
+              <div class="event-tag">כנס</div>
+              <h4>פורום החדשנות הישראלית-ערבית 2025</h4>
+              <p>מפגש מנהיגים ויזמים לבניית שיתופי פעולה כלכליים</p>
+              <div class="event-meta"><span>📍 מרכז פרס, תל אביב</span><span>🕘 09:00-17:00</span></div>
+            </div>
+          </div>
+          <div class="event-row">
+            <div class="event-date-box"><div class="event-day">5</div><div class="event-month">פברואר</div></div>
+            <div class="event-info">
+              <div class="event-tag">הרצאה</div>
+              <h4>מחשבה לפני הזמן — שמעון פרס ועתיד הטכנולוגיה</h4>
+              <p>הרצאת אורח של ד"ר עדי שרגא, אוניברסיטת תל אביב</p>
+              <div class="event-meta"><span>📍 אולם ז'בוטינסקי</span><span>🕖 18:30</span></div>
+            </div>
+          </div>
+          <div class="event-row">
+            <div class="event-date-box"><div class="event-day">18</div><div class="event-month">פברואר</div></div>
+            <div class="event-info">
+              <div class="event-tag">נוער</div>
+              <h4>יום מחר — נוער ישראלי-פלסטיני בתוכנית משותפת</h4>
+              <p>100 תלמידים מישראל ומהרשות יפגשו לפרויקט חדשנות משותף</p>
+              <div class="event-meta"><span>📍 תל אביב ורמאללה</span><span>🕙 כל היום</span></div>
+            </div>
+          </div>
+        </div>
+        <a href="#" class="btn btn-secondary" style="margin-top:24px">לכל האירועים</a>
+      </div>
+      <div>
+        <div class="section-tag">הצטרפו אלינו</div>
+        <h2 class="section-title">אירועים מיוחדים</h2>
+        <div class="divider"></div>
+        <div style="margin-top:28px;background:linear-gradient(135deg,var(--blue-dark),#003080);padding:36px;color:white">
+          <div style="font-size:11px;letter-spacing:.2em;color:rgba(255,255,255,.6);margin-bottom:12px">אירוע שנתי</div>
+          <h3 style="font-size:26px;color:white;margin-bottom:14px">ערב הזיכרון לשמעון פרס</h3>
+          <p style="color:rgba(255,255,255,.78);font-size:15px;margin-bottom:24px">טקס רשמי לציון שנת פטירתו. נאומים, מוסיקה, תצוגת ארכיון. פתוח לציבור.</p>
+          <div style="display:flex;gap:16px;margin-bottom:22px;font-size:13px;color:rgba(255,255,255,.65)">
+            <span>📅 28 בספטמבר 2025</span>
+            <span>📍 מרכז פרס, תל אביב</span>
+          </div>
+          <a href="#" class="btn btn-white">הירשמו בחינם</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ORANGE BAND ══ -->
+<div class="orange-band">
+  <div class="container">
+    <p>"אין לנו ברירה. <span>לא מוותרים על חלום רק כי הוא קשה לביצוע."</span></p>
+    <a href="#" class="btn btn-white" style="flex-shrink:0">הצטרפו לחזון</a>
+  </div>
+</div>
+
+<!-- ══ EDUCATION ══ -->
+<section id="education" class="section">
+  <div class="container">
+    <div class="section-header center">
+      <div class="section-tag">חינוך ולמידה</div>
+      <h2 class="section-title">תוכניות חינוכיות</h2>
+      <div class="divider"></div>
+      <p class="section-sub">תוכניות לכל הגילאים — מגן ילדים ועד אוניברסיטה — בישראל, בשטחים ובעולם.</p>
+    </div>
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab(this,'tab-all')">הכל</button>
+      <button class="tab" onclick="switchTab(this,'tab-youth')">נוער (14-18)</button>
+      <button class="tab" onclick="switchTab(this,'tab-teen')">צעירים (18-30)</button>
+      <button class="tab" onclick="switchTab(this,'tab-edu')">מחנכים</button>
+      <button class="tab" onclick="switchTab(this,'tab-intl')">בינלאומי</button>
+    </div>
+    <div id="tab-all" class="grid-3">
+      <div class="edu-card">
+        <div class="edu-age">גילאי 15-18</div>
+        <h3>תוכנית "מחר" — נוער לשלום</h3>
+        <p>תוכנית דו-לאומית שמחברת נוער ישראלי ופלסטיני דרך פרויקטים משותפים בטכנולוגיה וחינוך.</p>
+        <ul class="edu-list">
+          <li>12 מפגשים לאורך השנה</li>
+          <li>פרויקט יזמי משותף</li>
+          <li>ביקורים הדדיים</li>
+        </ul>
+      </div>
+      <div class="edu-card">
+        <div class="edu-age">גילאי 18-30</div>
+        <h3>מנהיגות לשלום</h3>
+        <p>תוכנית מובנה למנהיגים צעירים: כנסים, נסיעות לחו"ל, פגישות עם מנהיגים בינלאומיים.</p>
+        <ul class="edu-list">
+          <li>נסיעה לארה"ב ואירופה</li>
+          <li>חניכה אישית</li>
+          <li>רשת בוגרים בינלאומית</li>
+        </ul>
+      </div>
+      <div class="edu-card">
+        <div class="edu-age">מחנכים</div>
+        <h3>הכשרת מורים לשלום</h3>
+        <p>תוכנית לפיתוח יחידות לימוד על שלום, חדשנות ומורשת פרס — לשימוש בבתי הספר.</p>
+        <ul class="edu-list">
+          <li>חומרי לימוד בחינם</li>
+          <li>סדנאות להכשרה</li>
+          <li>תמיכה שוטפת</li>
+        </ul>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:36px">
+      <a href="#" class="btn btn-primary">לכל התוכניות החינוכיות</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ VISIT ══ -->
+<section id="visit" class="section section-alt">
+  <div class="container">
+    <div class="section-tag">תכנן את ביקורך</div>
+    <h2 class="section-title" style="margin-bottom:36px">בואו לבקר</h2>
+    <div class="visit-grid">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div class="visit-card">
+          <h4>שעות פתיחה</h4>
+          <div class="visit-row"><span class="visit-day">ראשון-חמישי</span><span class="visit-hours">09:00 – 17:00</span></div>
+          <div class="visit-row"><span class="visit-day">שישי</span><span class="visit-hours">09:00 – 13:00</span></div>
+          <div class="visit-row"><span class="visit-day">שבת</span><span class="visit-closed">סגור</span></div>
+          <div class="visit-row"><span class="visit-day">חגים</span><span class="visit-closed">לפי לוח החגים</span></div>
+          <div style="margin-top:14px;padding:12px;background:var(--blue-pale);font-size:13px;color:var(--blue)">
+            📌 מומלץ להזמין כרטיסים מראש — הכניסה מוגבלת לקבוצות
+          </div>
+        </div>
+        <div class="visit-card visit-tickets">
+          <h4>כרטיסים</h4>
+          <div class="ticket-row">
+            <div><div style="font-size:14px;font-weight:500;color:var(--text)">מבוגר</div><div class="ticket-note">גיל 18+</div></div>
+            <div class="ticket-price">₪45</div>
+          </div>
+          <div class="ticket-row">
+            <div><div style="font-size:14px;font-weight:500;color:var(--text)">ילד / סטודנט</div><div class="ticket-note">גיל 6-17 / עם תעודה</div></div>
+            <div class="ticket-price">₪25</div>
+          </div>
+          <div class="ticket-row">
+            <div><div style="font-size:14px;font-weight:500;color:var(--text)">קבוצות (10+)</div><div class="ticket-note">הזמנה מראש חובה</div></div>
+            <div class="ticket-price">₪35</div>
+          </div>
+          <div class="ticket-row">
+            <div><div style="font-size:14px;font-weight:500;color:var(--text)">ילדים עד גיל 6</div><div class="ticket-note"></div></div>
+            <div class="ticket-price" style="color:var(--orange)">חינם</div>
+          </div>
+          <a href="#" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:18px">הזמינו כרטיסים</a>
+        </div>
+      </div>
+      <div>
+        <div class="map-placeholder">
+          <div style="text-align:center">
+            <div class="map-pin">📍</div>
+            <div style="font-size:16px;font-weight:600;color:var(--blue-dark);margin-top:8px">מרכז פרס לשלום ולחדשנות</div>
+          </div>
+          <div class="map-address">
+            <strong style="color:white;display:block;margin-bottom:4px">רחוב קדמה 2, תל אביב-יפו</strong>
+            <span>ניתן להגיע ברכבת לתחנת ת"א ההגנה (5 דקות הליכה) · חניון ציבורי בסמוך</span>
+          </div>
+        </div>
+        <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div style="background:var(--white);border:1px solid var(--border);padding:18px;text-align:center">
+            <div style="font-size:28px;margin-bottom:6px">🅿️</div>
+            <div style="font-size:13px;font-weight:600;color:var(--text)">חניה</div>
+            <div style="font-size:12px;color:var(--text-light)">חניון ציבורי קדמה</div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--border);padding:18px;text-align:center">
+            <div style="font-size:28px;margin-bottom:6px">♿</div>
+            <div style="font-size:13px;font-weight:600;color:var(--text)">נגישות מלאה</div>
+            <div style="font-size:12px;color:var(--text-light)">כל הקומות נגישות</div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--border);padding:18px;text-align:center">
+            <div style="font-size:28px;margin-bottom:6px">🎧</div>
+            <div style="font-size:13px;font-weight:600;color:var(--text)">הדרכות</div>
+            <div style="font-size:12px;color:var(--text-light)">עב', אנג', ערב', צרפ'</div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--border);padding:18px;text-align:center">
+            <div style="font-size:28px;margin-bottom:6px">☕</div>
+            <div style="font-size:13px;font-weight:600;color:var(--text)">בית קפה</div>
+            <div style="font-size:12px;color:var(--text-light)">פתוח בשעות הביקור</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PARTNERS ══ -->
+<section class="partners-section">
+  <div class="container">
+    <div style="text-align:center">
+      <div class="section-tag" style="text-align:center">שותפים ותומכים</div>
+      <h3 style="font-size:22px;color:var(--text-mid);font-weight:400">פועלים יחד עם מוסדות מובילים בישראל ובעולם</h3>
+    </div>
+    <div class="partner-logos">
+      <div class="partner-logo">Microsoft</div>
+      <div class="partner-logo">Google</div>
+      <div class="partner-logo">Intel</div>
+      <div class="partner-logo">EU Commission</div>
+      <div class="partner-logo">USAID</div>
+      <div class="partner-logo">משרד החוץ</div>
+      <div class="partner-logo">UNDPׁ</div>
+      <div class="partner-logo">Bank of America</div>
+      <div class="partner-logo">ג'וינט</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SUPPORT ══ -->
+<section id="support" class="section section-dark">
+  <div class="container">
+    <div class="section-header center">
+      <div class="section-tag" style="color:rgba(255,255,255,.6)">הצטרפו אלינו</div>
+      <h2 class="section-title">תמכו בחזון</h2>
+      <div class="divider" style="margin:20px auto"></div>
+      <p class="section-sub">כל תרומה בונה גשר. כל שותפות מרחיבה שלום.</p>
+    </div>
+    <div class="support-grid">
+      <div class="support-card">
+        <div class="support-icon">❤️</div>
+        <h3>תרמו</h3>
+        <p>תרומתכם מממנת תוכניות שלום, חינוך ויזמות ליותר מ-1,000 משתתפים בשנה.</p>
+        <a href="#" class="btn btn-primary">לתרומה חד-פעמית</a>
+      </div>
+      <div class="support-card highlight">
+        <div class="support-icon">🌟</div>
+        <h3>חברות שנתית</h3>
+        <p>הצטרפו לקהילת חברי המרכז: הזמנות לאירועים, עדכונים בלעדיים ופגישות הנהלה.</p>
+        <a href="#" class="btn btn-white">הצטרפו כחברים</a>
+      </div>
+      <div class="support-card">
+        <div class="support-icon">🏢</div>
+        <h3>שותפות עסקית</h3>
+        <p>שיתוף פעולה ארגוני: נראות בינלאומית, נטוורקינג, CSR ומינוף הפעילות שלכם.</p>
+        <a href="#" class="btn btn-primary">לפרטי שותפות</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ NEWSLETTER ══ -->
+<div class="newsletter">
+  <div class="container">
+    <div class="newsletter-inner">
+      <div class="newsletter-text">
+        <h2>הישארו מעודכנים</h2>
+        <p>חדשות, אירועים ותוכניות — ישירות לתיבת הדואר שלכם. ניוזלטר חודשי.</p>
+      </div>
+      <div class="newsletter-form">
+        <input type="email" class="newsletter-input" placeholder="כתובת אימייל" aria-label="הכניסו כתובת אימייל">
+        <button class="newsletter-btn">הרשמה</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="site-logo">
+          <div class="logo-emblem">פ</div>
+          <div>
+            <div class="logo-text-he">מרכז פרס לשלום ולחדשנות</div>
+            <div class="logo-text-en">Peres Center for Peace and Innovation</div>
+          </div>
+        </div>
+        <p>ממשיכים את חזונו של שמעון פרס — חדשנות, יזמות ושיתוף פעולה בינלאומי לדורות הבאים.</p>
+        <div class="social-links" style="margin-top:18px">
+          <a href="#" class="social-link" aria-label="פייסבוק">f</a>
+          <a href="#" class="social-link" aria-label="טוויטר">𝕏</a>
+          <a href="#" class="social-link" aria-label="אינסטגרם">◎</a>
+          <a href="#" class="social-link" aria-label="יוטיוב">▶</a>
+          <a href="#" class="social-link" aria-label="לינקדאין">in</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>על המרכז</h5>
+        <ul class="footer-links">
+          <li><a href="#">מי אנחנו</a></li>
+          <li>
+            <span style="font-size:14px;color:rgba(255,255,255,.55);font-weight:500">שמעון פרס</span>
+            <div style="margin-top:4px;display:flex;flex-direction:column;gap:4px;padding-right:10px;border-right:2px solid rgba(255,255,255,.1)">
+              <a href="concept.html#s3" style="font-size:13px">↪ ביוגרפיה</a>
+              <a href="concept.html#s5" style="font-size:13px">↪ ארכיון</a>
+              <a href="intro.html" style="font-size:13px">↪ מסע וירטואלי</a>
+            </div>
+          </li>
+          <li><a href="#">חזון ושליחות</a></li>
+          <li><a href="#">הנהלה ומועצה</a></li>
+          <li><a href="#">שקיפות ודיווחים</a></li>
+          <li><a href="#">עבודה במרכז</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>תוכניות</h5>
+        <ul class="footer-links">
+          <li><a href="#">שלום ואבטחה</a></li>
+          <li><a href="#">חדשנות ויזמות</a></li>
+          <li><a href="#">חינוך ומנהיגות</a></li>
+          <li><a href="#">שיתוף פעולה ערבי-יהודי</a></li>
+          <li><a href="#">מחקר ופרסום</a></li>
+          <li><a href="#">תוכניות נוער</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>ביקור ומידע</h5>
+        <ul class="footer-links">
+          <li><a href="#">תכנן ביקורך</a></li>
+          <li><a href="#">כרטיסים</a></li>
+          <li><a href="#">אירועים</a></li>
+          <li><a href="#">חדשות</a></li>
+          <li><a href="#">צרו קשר</a></li>
+          <li><a href="#">נגישות</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 מרכז פרס לשלום ולחדשנות. כל הזכויות שמורות.</p>
+      <div style="display:flex;gap:20px;font-size:13px">
+        <a href="#" style="color:rgba(255,255,255,.4)">תנאי שימוש</a>
+        <a href="#" style="color:rgba(255,255,255,.4)">מדיניות פרטיות</a>
+        <a href="#" style="color:rgba(255,255,255,.4)">נגישות</a>
+        <a href="#" style="color:rgba(255,255,255,.4)">מפת אתר</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ════════════════════════════════════════
+     VIRTUAL TOUR OVERLAY
+════════════════════════════════════════ -->
+<div id="tour-overlay" style="display:none;position:fixed;inset:0;z-index:2000;overflow:hidden">
+
+<button id="tour-close-btn" onclick="closeTour()"
+  style="position:absolute;top:16px;left:20px;z-index:400;
+         background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+         color:rgba(240,228,192,.7);font-family:'Heebo',sans-serif;font-size:13px;
+         padding:7px 18px;cursor:pointer;letter-spacing:.06em;transition:all .2s;
+         border-radius:2px"
+  onmouseover="this.style.background='rgba(200,160,64,.15)';this.style.color='#c8a040'"
+  onmouseout="this.style.background='rgba(255,255,255,.08)';this.style.color='rgba(240,228,192,.7)'">
+  ✕ סגור
+</button>
+
+
+<canvas id="tourBgCanvas"></canvas>
+<div id="tourFade"></div>
+
+<div id="tourControls">
+  <button class="tourCtrlBtn" id="tour-music-btn" onclick="toggleMusic()" title="מוסיקה">🎵</button>
+  <button class="tourCtrlBtn hidden" id="tour-back-btn" onclick="goBack()">←</button>
+</div>
+
+<div id="tourProgress">
+  <div class="tdot active" id="td0"></div>
+  <div class="dot" id="td1"></div>
+  <div class="dot" id="td2"></div>
+  <div class="dot" id="td3"></div>
+  <div class="dot" id="td4"></div>
+</div>
+
+<!-- ══ S0: CINEMATIC INTRO ══ -->
+<div class="screen active" id="s0">
+
+  <!-- Skip button always visible -->
+  <button onclick="tourGo('s1')" style="position:absolute;top:18px;right:20px;z-index:50;
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+    color:rgba(240,228,192,.7);font-family:'Heebo',sans-serif;font-size:13px;
+    padding:7px 18px;cursor:pointer;letter-spacing:.06em;transition:all .2s"
+    onmouseover="this.style.background='rgba(200,160,64,.15)';this.style.color='#c8a040'"
+    onmouseout="this.style.background='rgba(255,255,255,.08)';this.style.color='rgba(240,228,192,.7)'">
+    דלג ←
+  </button>
+
+  <!-- Stage 0: Building exterior (real photo) -->
+  <div class="intro-stage show" id="intro-0">
+    <div style="position:absolute;inset:0;overflow:hidden">
+      <img src="fd9c4659-8cec-4ca9-a584-a084b5b1787b.jpg" alt="מרכז פרס" class="intro-img ken-burns"
+        style="width:100%;height:100%;object-fit:cover;object-position:center"
+        onerror="this.parentElement.style.background='linear-gradient(180deg,#0a1428,#152240)'">
+      <div class="intro-overlay"></div>
+    </div>
+    <div class="intro-caption">
+      <h2>מרכז פרס לשלום ולחדשנות</h2>
+      <p>יפו, תל אביב</p>
+    </div>
+  </div>
+
+  <!-- Stage 1: Interior lobby (real photo) -->
+  <div class="intro-stage" id="intro-1">
+    <div style="position:absolute;inset:0;overflow:hidden">
+      <img src="b444af45-7ee6-43dd-9b05-918a37b6a462.jpg" alt="לובי" class="intro-img ken-right"
+        style="width:100%;height:100%;object-fit:cover;object-position:center"
+        onerror="this.parentElement.style.background='#0c0a08'">
+      <div class="intro-overlay" style="background:linear-gradient(to top,rgba(8,6,4,.92) 0%,rgba(8,6,4,.3) 70%,rgba(8,6,4,.15) 100%)"></div>
+    </div>
+    <div class="intro-caption">
+      <h2>נכנסים פנימה</h2>
+      <p style="letter-spacing:.12em">הלובי של המרכז</p>
+    </div>
+  </div>
+
+  <!-- Stage 2: Stairs (real photo) -->
+  <div class="intro-stage" id="intro-2">
+    <div style="position:absolute;inset:0;overflow:hidden">
+      <img src="e9a6c321-7a03-4416-8f39-54b99b371089.jpg" alt="מדרגות" class="intro-img ken-burns"
+        style="width:100%;height:100%;object-fit:cover;object-position:center top"
+        onerror="this.parentElement.style.background='#0a0806'">
+      <div class="intro-overlay" style="background:linear-gradient(to top,rgba(8,6,4,.95) 0%,rgba(8,6,4,.25) 60%,rgba(8,6,4,.1) 100%)"></div>
+    </div>
+    <div class="intro-caption">
+      <h2>עולים לחדרו</h2>
+      <p style="letter-spacing:.12em">קומה שלישית</p>
+    </div>
+  </div>
+
+  <!-- Stage 3: Elevator -->
+  <div class="intro-stage" id="intro-3">
+    <div class="elev-floor-display">קומה <span id="floor-num">ק׳</span></div>
+    <div class="elevator-shaft">
+      <div class="elevator-floors">
+        <div class="floor-num" id="fn3">ג׳</div>
+        <div class="floor-num" id="fn2">ב׳</div>
+        <div class="floor-num" id="fn1">א׳</div>
+        <div class="floor-num active" id="fn0">ק׳</div>
+      </div>
+      <div class="elevator-cabin" id="elev-cabin">
+        <div class="cabin-inner"></div>
+      </div>
+      <div class="elevator-doors" id="elev-doors">
+        <div class="door-panel left"></div>
+        <div class="door-panel right"></div>
+      </div>
+    </div>
+    <p style="margin-top:22px;font-size:13px;color:var(--faint);letter-spacing:.1em">עולים לקומה השלישית</p>
+  </div>
+
+  <!-- Stage 4: Opening the door -->
+  <div class="intro-stage" id="intro-4">
+    <p style="font-size:13px;color:var(--faint);letter-spacing:.12em;margin-bottom:28px">חדרו של שמעון פרס</p>
+    <div class="big-door" id="big-door">
+      <div class="door-half"><div class="door-ornament">✦</div></div>
+      <div class="door-half"><div class="door-ornament">✦</div></div>
+      <div class="door-room">
+        <img src="https://res.cloudinary.com/dmr8zhfer/image/upload/f_auto,q_auto/peres_room_main_xpo9zv"
+          alt="חדר פרס" onerror="this.style.background='#1a1208'">
+      </div>
+    </div>
+    <p id="door-cta" style="font-size:14px;color:var(--dim);margin-top:24px;opacity:0;transition:opacity .6s;cursor:pointer" onclick="tourGo('s1')">
+      לחצו להיכנס ←
+    </p>
+  </div>
+
+</div>
+
+<!-- ══ S1: GATEWAY — "איך הוא עושה את זה?" ══ -->
+<div class="screen" id="s1">
+  <div style="position:absolute;inset:0;overflow:hidden;z-index:0">
+    <img src="a9a3c97a-38cb-47c4-99de-7de6b5713aaa.jpg" alt="חדר פרס"
+      style="width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.3) saturate(.6)"
+      onerror="this.style.display='none'">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 55%,rgba(8,6,4,.3) 0%,rgba(8,6,4,.88) 100%)"></div>
+  </div>
+  <div style="position:relative;z-index:1;text-align:center;max-width:580px;padding:0 24px">
+    <div class="tag" style="margin-bottom:24px;color:rgba(200,160,64,.7)">אתם בחדרו של שמעון פרס</div>
+    <h1 style="font-size:38px;font-weight:900;color:var(--cream);line-height:1.2;margin-bottom:16px">
+      איך הוא<br><em style="color:var(--gold);font-style:normal">עושה את זה?</em>
+    </h1>
+    <p style="font-size:15px;color:var(--dim);line-height:1.85;margin-bottom:44px">
+      מה הסוד של איש שהפסיד חמש פעמים ולא ויתר?<br>
+      בחרו את הדרך שלכם לגלות.
+    </p>
+    <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap">
+      <a href="#" onclick="tourGo('s3'); return false;" style="text-decoration:none;min-width:190px">
+        <div class="jbtn jbtn-gold" style="flex-direction:column;gap:7px;padding:20px 28px;cursor:pointer;display:flex;align-items:center">
+          <span style="font-size:24px">✨</span>
+          <span style="font-size:16px;font-weight:700">החלום שלו</span>
+          <span style="font-size:12px;font-weight:300;opacity:.75">הכירו את הדמיון שמניע אותו</span>
+        </div>
+      </a>
+      <a href="#" onclick="tourGo('s2'); return false;" style="text-decoration:none;min-width:190px">
+        <div class="jbtn jbtn-outline" style="flex-direction:column;gap:7px;padding:20px 28px;cursor:pointer;display:flex;align-items:center">
+          <span style="font-size:24px">⚖️</span>
+          <span style="font-size:16px;font-weight:700">הדילמה שחי</span>
+          <span style="font-size:12px;font-weight:300;opacity:.75">היו בנעליו ברגעי ההכרעה</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ S2: DILEMMAS ══ -->
+<div class="screen" id="s2">
+  <div class="dilemma-wrap">
+    <div class="tag">שאלות שפרס חי בתוכן</div>
+    <div class="dilemma-progress" id="dil-prog">שאלה 1 מתוך 3</div>
+    <span class="dilemma-icon" id="dil-icon">🌅</span>
+    <p class="dilemma-q" id="dil-q">—</p>
+    <div class="dilemma-opts" id="dil-opts"></div>
+    <div class="peres-response" id="peres-resp">
+      <div class="peres-resp-label">פרס אמר:</div>
+      <p class="peres-resp-text" id="peres-resp-text"></p>
+    </div>
+    <button class="jbtn jbtn-gold dilemma-next" id="dil-next" onclick="nextDilemma()">המשך ←</button>
+  </div>
+</div>
+
+<!-- ══ S3: DREAM ══ -->
+<div class="screen" id="s3">
+  <!-- Gate -->
+  <div class="dream-gate" id="dream-gate">
+    <div class="tag">החלום שלכם</div>
+    <h2>יש לכם חלום?</h2>
+    <p>פרס אמר שהדמיון הוא המשאב היחיד שאין לו גבול.<br>שתפו אותנו בחלום אחד שלכם.</p>
+    <div class="gate-btns">
+      <button class="jbtn jbtn-gold" onclick="openPath('A')">כן, יש לי חלום ←</button>
+      <button class="jbtn jbtn-outline" onclick="openPath('B')">תעזרו לי לגלות</button>
+    </div>
+  </div>
+
+  <!-- Path A -->
+  <div class="dream-input-wrap" id="path-a">
+    <div class="tag" style="text-align:center">כתבו בחופשיות</div>
+    <p class="dream-label" style="text-align:center;font-size:16px;color:var(--cream);margin-bottom:16px">
+      "החלום שלי הוא..."
+    </p>
+    <textarea class="dream-input" id="dream-text-a" maxlength="80"
+      placeholder="כתבו כאן... (עד 80 תווים)"></textarea>
+    <div class="char-hint"><span id="char-a">0</span>/80</div>
+    <button class="jbtn jbtn-gold" style="margin-top:20px;width:100%;justify-content:center" onclick="submitDream()">
+      להוסיף לקיר החלומות ←
+    </button>
+    <button class="jbtn jbtn-outline jbtn-sm" style="margin-top:10px;width:100%;justify-content:center" onclick="openPath('B')">
+      לא בטוח/ה — עזרו לי
+    </button>
+  </div>
+
+  <!-- Path B -->
+  <div class="machine-wrap" id="path-b">
+    <div class="tag" style="text-align:center;display:block;margin-bottom:16px">מכונת החלומות</div>
+    <div id="msteps"></div>
+    <div class="thread-preview" id="thread-preview">
+      <div class="thread-bead" id="tb1">—</div>
+      <div class="thread-dash"></div>
+      <div class="thread-bead" id="tb2">—</div>
+      <div class="thread-dash"></div>
+      <div class="thread-bead" id="tb3">—</div>
+    </div>
+    <button class="jbtn jbtn-gold" id="machine-submit"
+      style="margin-top:22px;width:100%;justify-content:center;opacity:0;transition:opacity .4s"
+      onclick="submitMachine()">
+      זה החלום שלי ←
+    </button>
+  </div>
+</div>
+
+<!-- ══ S4: WALL OF DREAMS ══ -->
+<div class="screen" id="s4">
+  <canvas id="wallCanvas"></canvas>
+  <div class="wall-ui" style="padding-top:28px">
+    <div class="wall-title">קיר החלומות</div>
+    <div class="wall-sub">עברו עם העכבר על אשכול חלקיקים לקריאה</div>
+  </div>
+  <div class="wall-hint">כל אשכול = חלום אחד · החלומות מתחברים</div>
+  <div class="wall-btns" id="wall-btns">
+    <button class="jbtn jbtn-gold btn-sm" onclick="restart()">מסע נוסף</button>
+    <a href="#" onclick="closeTour(); return false;" class="jbtn jbtn-outline jbtn-sm">לאתר המרכז</a>
+  </div>
+</div>
+
+
+</div>
+
+
+<!-- TOUR OVERLAY -->
+<div id="tour-overlay" style="display:none;position:fixed;inset:0;z-index:2000;overflow:hidden">
+<button onclick="closeTour()" style="position:fixed;top:16px;left:20px;z-index:4000;background:rgba(0,0,0,.55);border:1px solid rgba(200,160,64,.4);color:rgba(240,228,192,.9);font-family:Heebo,sans-serif;font-size:13px;padding:8px 22px;cursor:pointer;border-radius:2px;transition:all .2s">✕ סגור</button>
+
+
+<canvas id="tourBgCanvas"></canvas>
+<div id="tourFade"></div>
+
+<div id="tourControls">
+  <button class="tourCtrlBtn" id="tour-music-btn" onclick="toggleMusic()" title="מוסיקה">🎵</button>
+  <button class="tourCtrlBtn hidden" id="tour-back-btn" onclick="goBack()">←</button>
+</div>
+
+<div id="tourProgress">
+  <div class="tdot active" id="td0"></div>
+  <div class="tdot" id="td1"></div>
+  <div class="tdot" id="td2"></div>
+  <div class="tdot" id="td3"></div>
+  <div class="tdot" id="td4"></div>
+</div>
+
+<!-- ══ S0: CINEMATIC INTRO ══ -->
+<div class="screen active" id="s0">
+
+  <!-- Skip button always visible -->
+  <button onclick="tourGo('s1')" style="position:absolute;top:18px;right:20px;z-index:50;
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+    color:rgba(240,228,192,.7);font-family:'Heebo',sans-serif;font-size:13px;
+    padding:7px 18px;cursor:pointer;letter-spacing:.06em;transition:all .2s"
+    onmouseover="this.style.background='rgba(200,160,64,.15)';this.style.color='#c8a040'"
+    onmouseout="this.style.background='rgba(255,255,255,.08)';this.style.color='rgba(240,228,192,.7)'">
+    דלג ←
+  </button>
+
+  <!-- Stage 0: Building exterior (real photo) -->
+  <div class="intro-stage show" id="intro-0">
+    <div style="position:absolute;inset:0;overflow:hidden">
+      <img src="fd9c4659-8cec-4ca9-a584-a084b5b1787b.jpg" alt="מרכז פרס" class="intro-img ken-burns"
+        style="width:100%;height:100%;object-fit:cover;object-position:center"
+        onerror="this.parentElement.style.background='linear-gradient(180deg,#0a1428,#152240)'">
+      <div class="intro-overlay"></div>
+    </div>
+    <div class="intro-caption">
+      <h2>מרכז פרס לשלום ולחדשנות</h2>
+      <p>יפו, תל אביב</p>
+    </div>
+  </div>
+
+  <!-- Stage 1: Interior lobby (real photo) -->
+  <div class="intro-stage" id="intro-1">
+    <div style="position:absolute;inset:0;overflow:hidden">
+      <img src="b444af45-7ee6-43dd-9b05-918a37b6a462.jpg" alt="לובי" class="intro-img ken-right"
+        style="width:100%;height:100%;object-fit:cover;object-position:center"
+        onerror="this.parentElement.style.background='#0c0a08'">
+      <div class="intro-overlay" style="background:linear-gradient(to top,rgba(8,6,4,.92) 0%,rgba(8,6,4,.3) 70%,rgba(8,6,4,.15) 100%)"></div>
+    </div>
+    <div class="intro-caption">
+      <h2>נכנסים פנימה</h2>
+      <p style="letter-spacing:.12em">הלובי של המרכז</p>
+    </div>
+  </div>
+
+  <!-- Stage 2: Hologram hall -->
+  <div class="intro-stage" id="intro-2">
+    <div style="position:absolute;inset:0;overflow:hidden">
+      <img src="a9a3c97a-38cb-47c4-99de-7de6b5713aaa.jpg" alt="אולם ההולוגרמות" class="intro-img ken-right"
+        style="width:100%;height:100%;object-fit:cover;object-position:center"
+        onerror="this.parentElement.style.background='#0a0806'">
+      <div class="intro-overlay" style="background:linear-gradient(to top,rgba(8,6,4,.95) 0%,rgba(8,6,4,.2) 65%,rgba(8,6,4,.05) 100%)"></div>
+    </div>
+    <div class="intro-caption">
+      <h2>האולם הדיגיטלי</h2>
+      <p style="letter-spacing:.12em">זיכרון חי</p>
+    </div>
+  </div>
+
+  <!-- Stage 3: Elevator -->
+  <div class="intro-stage" id="intro-3">
+    <div class="elev-floor-display">קומה <span id="floor-num">ק׳</span></div>
+    <div class="elevator-shaft">
+      <div class="elevator-floors">
+        <div class="floor-num" id="fn3">ג׳</div>
+        <div class="floor-num" id="fn2">ב׳</div>
+        <div class="floor-num" id="fn1">א׳</div>
+        <div class="floor-num active" id="fn0">ק׳</div>
+      </div>
+      <div class="elevator-cabin" id="elev-cabin">
+        <div class="cabin-inner"></div>
+      </div>
+      <div class="elevator-doors" id="elev-doors">
+        <div class="door-panel left"></div>
+        <div class="door-panel right"></div>
+      </div>
+    </div>
+    <p style="margin-top:22px;font-size:13px;color:var(--faint);letter-spacing:.1em">עולים לקומה השלישית</p>
+  </div>
+
+  <!-- Stage 4: Opening the door -->
+  <div class="intro-stage" id="intro-4">
+    <p style="font-size:13px;color:var(--faint);letter-spacing:.12em;margin-bottom:28px">חדרו של שמעון פרס</p>
+    <div class="big-door" id="big-door">
+      <div class="door-half"><div class="door-ornament">✦</div></div>
+      <div class="door-half"><div class="door-ornament">✦</div></div>
+      <div class="door-room">
+        <img src="https://res.cloudinary.com/dmr8zhfer/image/upload/f_auto,q_auto/peres_room_main_xpo9zv"
+          alt="חדר פרס" onerror="this.style.background='#1a1208'">
+      </div>
+    </div>
+    <p id="door-cta" style="font-size:14px;color:var(--dim);margin-top:24px;opacity:0;transition:opacity .6s;cursor:pointer" onclick="tourGo('s1')">
+      לחצו להיכנס ←
+    </p>
+  </div>
+
+</div>
+
+<!-- ══ S1: GATEWAY — "איך הוא עושה את זה?" ══ -->
+<div class="screen" id="s1">
+  <div style="position:absolute;inset:0;overflow:hidden;z-index:0">
+    <img src="a9a3c97a-38cb-47c4-99de-7de6b5713aaa.jpg" alt="חדר פרס"
+      style="width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.3) saturate(.6)"
+      onerror="this.style.display='none'">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 55%,rgba(8,6,4,.3) 0%,rgba(8,6,4,.88) 100%)"></div>
+  </div>
+  <div style="position:relative;z-index:1;text-align:center;max-width:580px;padding:0 24px">
+    <div class="tag" style="margin-bottom:24px;color:rgba(200,160,64,.7)">אתם בחדרו של שמעון פרס</div>
+    <h1 style="font-size:38px;font-weight:900;color:var(--cream);line-height:1.2;margin-bottom:16px">
+      איך הוא<br><em style="color:var(--gold);font-style:normal">עושה את זה?</em>
+    </h1>
+    <p style="font-size:15px;color:var(--dim);line-height:1.85;margin-bottom:44px">
+      מה הסוד של איש שהפסיד חמש פעמים ולא ויתר?<br>
+      בחרו את הדרך שלכם לגלות.
+    </p>
+    <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap">
+      <a href="#" onclick="tourGo('s3'); return false;" style="text-decoration:none;min-width:190px">
+        <div class="jbtn jbtn-gold" style="flex-direction:column;gap:7px;padding:20px 28px;cursor:pointer;display:flex;align-items:center">
+          <span style="font-size:24px">✨</span>
+          <span style="font-size:16px;font-weight:700">החלום שלו</span>
+          <span style="font-size:12px;font-weight:300;opacity:.75">הכירו את הדמיון שמניע אותו</span>
+        </div>
+      </a>
+      <a href="#" onclick="tourGo('s2'); return false;" style="text-decoration:none;min-width:190px">
+        <div class="jbtn jbtn-outline" style="flex-direction:column;gap:7px;padding:20px 28px;cursor:pointer;display:flex;align-items:center">
+          <span style="font-size:24px">⚖️</span>
+          <span style="font-size:16px;font-weight:700">הדילמה שחי</span>
+          <span style="font-size:12px;font-weight:300;opacity:.75">היו בנעליו ברגעי ההכרעה</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ S2: DILEMMAS ══ -->
+<div class="screen" id="s2">
+  <div class="dilemma-wrap">
+    <div class="tag">שאלות שפרס חי בתוכן</div>
+    <div class="dilemma-progress" id="dil-prog">שאלה 1 מתוך 3</div>
+    <span class="dilemma-icon" id="dil-icon">🌅</span>
+    <p class="dilemma-q" id="dil-q">—</p>
+    <div class="dilemma-opts" id="dil-opts"></div>
+    <div class="peres-response" id="peres-resp">
+      <div class="peres-resp-label">פרס אמר:</div>
+      <p class="peres-resp-text" id="peres-resp-text"></p>
+    </div>
+    <button class="jbtn btn-gold dilemma-next" id="dil-next" onclick="nextDilemma()">המשך ←</button>
+  </div>
+</div>
+
+<!-- ══ S3: DREAM ══ -->
+<div class="screen" id="s3">
+  <!-- Gate -->
+  <div class="dream-gate" id="dream-gate">
+    <div class="tag">החלום שלכם</div>
+    <h2>יש לכם חלום?</h2>
+    <p>פרס אמר שהדמיון הוא המשאב היחיד שאין לו גבול.<br>שתפו אותנו בחלום אחד שלכם.</p>
+    <div class="gate-btns">
+      <button class="jbtn jbtn-gold" onclick="openPath('A')">כן, יש לי חלום ←</button>
+      <div class="jbtn jbtn-outline" onclick="pullHandle()" style="flex-direction:column;gap:0;padding:16px 28px;cursor:pointer">
+        <span style="font-size:13px;font-weight:600;margin-bottom:10px">מכונת החלומות</span>
+        <div class="handle-wrap" id="m-handle">
+          <div class="handle-knob"></div>
+          <div class="handle-rod"></div>
+          <div class="handle-base"></div>
+        </div>
+        <span class="handle-label">משכו את הידית</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Path A -->
+  <div class="dream-input-wrap" id="path-a">
+    <div class="tag" style="text-align:center">כתבו בחופשיות</div>
+    <p class="dream-label" style="text-align:center;font-size:16px;color:var(--cream);margin-bottom:16px">
+      "החלום שלי הוא..."
+    </p>
+    <textarea class="dream-input" id="dream-text-a" maxlength="80"
+      placeholder="כתבו כאן... (עד 80 תווים)"></textarea>
+    <div class="char-hint"><span id="char-a">0</span>/80</div>
+    <button class="jbtn jbtn-gold" style="margin-top:20px;width:100%;justify-content:center" onclick="submitDream()">
+      להוסיף לקיר החלומות ←
+    </button>
+    <button class="jbtn jbtn-outline jbtn-sm" style="margin-top:10px;width:100%;justify-content:center" onclick="openPath('B')">
+      לא בטוח/ה — עזרו לי
+    </button>
+  </div>
+
+  <!-- Path B -->
+  <div class="machine-wrap" id="path-b">
+    <div class="tag" style="text-align:center;display:block;margin-bottom:16px">מכונת החלומות</div>
+    <div id="msteps"></div>
+    <div class="thread-preview" id="thread-preview">
+      <div class="thread-bead" id="tb1">—</div>
+      <div class="thread-dash"></div>
+      <div class="thread-bead" id="tb2">—</div>
+      <div class="thread-dash"></div>
+      <div class="thread-bead" id="tb3">—</div>
+    </div>
+    <button class="jbtn jbtn-gold" id="machine-submit"
+      style="margin-top:22px;width:100%;justify-content:center;opacity:0;transition:opacity .4s"
+      onclick="submitMachine()">
+      זה החלום שלי ←
+    </button>
+  </div>
+</div>
+
+<!-- ══ S4: WALL OF DREAMS ══ -->
+<div class="screen" id="s4">
+  <canvas id="wallCanvas"></canvas>
+  <div class="wall-ui" style="padding-top:28px">
+    <div class="wall-title">קיר החלומות</div>
+    <div class="wall-sub">עברו עם העכבר על אשכול חלקיקים לקריאה</div>
+  </div>
+  <div class="wall-hint">כל אשכול = חלום אחד · החלומות מתחברים</div>
+  <div class="wall-btns" id="wall-btns">
+    <button class="jbtn jbtn-gold jbtn-sm" onclick="restart()">מסע נוסף</button>
+    <a href="#" onclick="closeTour(); return false;" class="jbtn jbtn-outline jbtn-sm">לאתר המרכז</a>
+  </div>
+</div>
+
+</div>
+</main>
+
+<script>
+/* Tabs */
+function switchTab(btn, id){
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+  btn.classList.add('active');
+}
+
+/* Scroll reveal */
+var observer = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:.12});
+document.querySelectorAll('.animate').forEach(function(el){ observer.observe(el); });
+
+/* Sticky header shadow */
+window.addEventListener('scroll',function(){
+  document.getElementById('site-header').style.boxShadow =
+    window.scrollY > 10 ? '0 4px 20px rgba(0,0,0,.12)' : '0 2px 12px rgba(0,0,0,.06)';
+});
+
+/* Newsletter */
+document.querySelector('.newsletter-btn').addEventListener('click',function(){
+  var input = document.querySelector('.newsletter-input');
+  if(input.value.includes('@')){
+    this.textContent = '✓ נרשמתם!';
+    this.style.background = '#2a9a60';
+    input.value = '';
+  }
+});
+</script>
+
+<script>
+/* TOUR JS */
+
+/* ════════════════════════════════════════
+   MUSIC — Web Audio API
+════════════════════════════════════════ */
+let audioCtx = null, musicOn = false, masterGain = null;
+const NOTE_FREQS = [220,246.94,277.18,329.63,369.99,440,493.88,554.37]; // A pentatonic+
+
+function initAudio(){
+  if(audioCtx) return;
+  audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+  masterGain = audioCtx.createGain();
+  masterGain.gain.value = 0;
+  masterGain.connect(audioCtx.destination);
+
+  const delay = audioCtx.createDelay(3);
+  delay.delayTime.value = 0.65;
+  const fb = audioCtx.createGain(); fb.gain.value = 0.38;
+  const delayGain = audioCtx.createGain(); delayGain.gain.value = 0.55;
+  delay.connect(fb); fb.connect(delay);
+  delay.connect(delayGain); delayGain.connect(masterGain);
+
+  // Drone oscillators
+  [[110,.07,'sine'],[220,.04,'triangle'],[329.63,.025,'sine']].forEach(([f,g,t])=>{
+    const osc=audioCtx.createOscillator(), gn=audioCtx.createGain();
+    osc.type=t; osc.frequency.value=f; gn.gain.value=g;
+    osc.connect(gn); gn.connect(masterGain); gn.connect(delay); osc.start();
+  });
+
+  // Arpeggio
+  let ni=0;
+  function playArp(){
+    if(!musicOn) return;
+    const osc=audioCtx.createOscillator(), gn=audioCtx.createGain();
+    osc.type='triangle';
+    osc.frequency.value = NOTE_FREQS[ni%NOTE_FREQS.length]*( ni%16<8 ? 1 : 2);
+    ni++;
+    const t=audioCtx.currentTime;
+    gn.gain.setValueAtTime(0,t);
+    gn.gain.linearRampToValueAtTime(.055,t+.08);
+    gn.gain.exponentialRampToValueAtTime(.001,t+2.2);
+    osc.connect(gn); gn.connect(delay);
+    osc.start(t); osc.stop(t+2.5);
+    setTimeout(playArp, 1800+Math.random()*800);
+  }
+  playArp();
+}
+
+function toggleMusic(){
+  initAudio();
+  musicOn = !musicOn;
+  document.getElementById('tour-music-btn').textContent = musicOn ? '🔇' : '🎵';
+  if(masterGain){
+    masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+    masterGain.gain.linearRampToValueAtTime(musicOn ? .22 : 0, audioCtx.currentTime+1.2);
+  }
+}
+
+/* ════════════════════════════════════════
+   BACKGROUND PARTICLES
+════════════════════════════════════════ */
+const bgC = document.getElementById('tourBgCanvas');
+const bgX = bgC.getContext('2d');
+let BW,BH,bgP=[];
+function resizeBg(){ BW=bgC.width=innerWidth; BH=bgC.height=innerHeight }
+resizeBg(); window.addEventListener('resize',resizeBg);
+for(let i=0;i<60;i++) bgP.push({x:Math.random()*BW,y:Math.random()*BH,vx:(Math.random()-.5)*.2,vy:(Math.random()-.5)*.15+.06,r:Math.random()*1.2+.3,a:Math.random()*.18+.04});
+(function loop(){
+  bgX.fillStyle='rgba(8,6,4,.2)'; bgX.fillRect(0,0,BW,BH);
+  bgP.forEach(p=>{
+    p.x+=p.vx; p.y+=p.vy;
+    if(p.y>BH+6) p.y=-6;
+    bgX.beginPath(); bgX.arc(p.x,p.y,p.r,0,Math.PI*2);
+    bgX.fillStyle=`rgba(200,160,64,${p.a})`; bgX.fill();
+  });
+  requestAnimationFrame(loop);
+})();
+
+/* ════════════════════════════════════════
+   SCREEN NAVIGATION
+════════════════════════════════════════ */
+const SCREENS = ['s0','s1','s2','s3','s4'];
+let cur = 's0', hist = ['s0'];
+
+function tourGo(id){
+  const fade=document.getElementById('tourFade');
+  fade.style.transition='opacity .4s'; fade.classList.add('dark');
+  setTimeout(()=>{
+    document.getElementById(cur).classList.remove('active');
+    cur=id; hist.push(id);
+    document.getElementById(id).classList.add('active');
+    updateProgress(); updateBack();
+    onEnter(id);
+    fade.classList.remove('dark');
+  },380);
+}
+
+function goBack(){
+  if(hist.length<2) return;
+  hist.pop(); const prev=hist[hist.length-1]; hist.pop();
+  tourGo(prev);
+}
+
+function updateProgress(){
+  SCREENS.forEach((s,i)=>{
+    const d=document.getElementById('td'+i); if(!d) return;
+    const idx=SCREENS.indexOf(cur);
+    d.className='dot'+(i<idx?' done':i===idx?' active':'');
+  });
+}
+function updateBack(){
+  document.getElementById('tour-back-btn').className='tourCtrlBtn'+(['s0','s1'].includes(cur)?' hidden':'');
+}
+
+/* ════════════════════════════════════════
+   CINEMATIC INTRO
+════════════════════════════════════════ */
+// Stars canvas for building stage
+(function(){
+  const sc=document.getElementById('starCanvas');
+  if(!sc) return;
+  sc.width=window.innerWidth; sc.height=window.innerHeight*.7;
+  const sx=sc.getContext('2d');
+  for(let i=0;i<120;i++){
+    const x=Math.random()*sc.width, y=Math.random()*sc.height*.6;
+    const r=Math.random()*.9+.2, a=Math.random()*.6+.1;
+    sx.beginPath(); sx.arc(x,y,r,0,Math.PI*2);
+    sx.fillStyle=`rgba(255,255,255,${a})`; sx.fill();
+  }
+})();
+
+let introStage=0;
+function runIntro(){
+  // exterior 3s → lobby → stairs 2.5s each → elevator → door
+  setTimeout(()=>advanceIntro(1), 3000);
+  setTimeout(()=>advanceIntro(2), 5600);
+}
+function advanceIntro(n){
+  const prev=document.getElementById('intro-'+(n-1));
+  if(prev) prev.classList.remove('show');
+  const next=document.getElementById('intro-'+n);
+  if(!next) return;
+  next.classList.add('show');
+  introStage=n;
+  if(n===3) runElevator();
+  if(n===4) runDoor();
+}
+function runElevator(){
+  const floors=['ק׳','א׳','ב׳','ג׳'];
+  const fnIds=['fn0','fn1','fn2','fn3'];
+  let f=0;
+  const iv=setInterval(()=>{
+    f++;
+    if(f>=floors.length){ clearInterval(iv); return; }
+    const fn=document.getElementById('floor-num');
+    if(fn) fn.textContent=floors[f];
+    fnIds.forEach((id,i)=>{
+      const el=document.getElementById(id);
+      if(el) el.className='floor-num'+(i===f?' active':'');
+    });
+  },900);
+  setTimeout(()=>{
+    const d=document.getElementById('elev-doors');
+    if(d) d.classList.add('doors-open');
+  },4000);
+  setTimeout(()=>advanceIntro(4), 5800);
+}
+function runDoor(){
+  setTimeout(()=>{
+    const d=document.getElementById('big-door');
+    if(d) d.classList.add('door-open');
+  },500);
+  setTimeout(()=>{
+    const c=document.getElementById('door-cta');
+    if(c) c.style.opacity='1';
+  },2400);
+}
+
+/* ════════════════════════════════════════
+   DILEMMAS
+════════════════════════════════════════ */
+const DILEMMAS = [
+  {
+    icon:'✈️',
+    q:'1976 — מטוס חטוף בנמל אנטבה, אוגנדה. 105 בני ערובה. פרס דחף לפעול. ומה אתם?',
+    opts:[
+      {t:'מו"מ — החיים לפני הכל',
+       r:'"אני תמכתי במבצע לא כי אני אוהב מלחמה, אלא כי אין מו"מ עם מי שרוצה לגזור את קיומך."'},
+      {t:'מבצע צבאי — ישראל לא תשחרר',
+       r:'"רבין היסס. אני לחצתי. ההיסטוריה הוכיחה שהאומץ לפעול היה הדרך הנכונה."'},
+      {t:'לחכות — לאסוף מידע לפני פעולה',
+       r:'"הזמן הוא נשק. אבל יש רגעים שבהם ההמתנה היא ויתור. אנטבה לימד אותי שאמונה צריכה רגליים."'}
+    ]
+  },
+  {
+    icon:'🌅',
+    q:'פרס חלם על שלום כשרובם אמרו שזה בלתי אפשרי. מה מחזיק חלום גדול בחיים?',
+    opts:[
+      {t:'נחישות פנימית שלא מכירה "לא"',
+       r:'"המפסיד האמיתי הוא מי שמפסיק לנסות. אני ניסיתי חמש פעמים. בכל פעם למדתי משהו שלא ידעתי."'},
+      {t:'אנשים שמאמינים איתך',
+       r:'"אתה לא צריך שכולם יאמינו. אתה צריך אחד. בן-גוריון האמין בי כשאחרים לא."'},
+      {t:'לראות את התוצאה בעיני הרוח',
+       r:'"חלום הוא לא מה שרואים בשינה. זה מה שלא מניח לך לישון."'}
+    ]
+  },
+  {
+    icon:'⚡',
+    q:'פרס הפסיד בבחירות חמש פעמים. מה ההבדל בין הפסד לכישלון?',
+    opts:[
+      {t:'הפסד הוא תוצאה. כישלון הוא ויתור.',
+       r:'"אם למדת ממה שלא הצליח — זה לא היה כישלון. זה היה מחיר ההשכלה."'},
+      {t:'כישלון הוא כשלא ניסית מספיק',
+       r:'"לא כמות הניסיונות קובעת. האומץ לנסות שוב — זה מה שקובע."'},
+      {t:'שניהם כואבים, זה מספיק',
+       r:'"כן, זה כואב. אבל הכאב מזכיר לך שאכפת לך. ומה שאכפת לך — אתה לא מפסיק לבנות."'}
+    ]
+  },
+  {
+    icon:'🕰️',
+    q:'"זקנה היא לא גיל — היא עצלות המחשבה." מה שומר על החשיבה צעירה?',
+    opts:[
+      {t:'לשאול שאלות שאחרים לא שואלים',
+       r:'"השאלה הנכונה שווה יותר מאלף תשובות. ישראל ניצחה לא כי היו לנו יותר — אלא כי שאלנו שאלות אחרות."'},
+      {t:'ללמוד טכנולוגיה חדשה כל הזמן',
+       r:'"הטכנולוגיה היא לא המטרה — היא כלי לדמיין עתיד שעוד לא קיים."'},
+      {t:'ללמוד מהדור הצעיר',
+       r:'"הצעירים לא צריכים להסכים איתנו. הם צריכים לאתגר אותנו. זה הדבר הכי יפה שיש."'}
+    ]
+  }
+];
+
+let dilPhase=0, dilAnswered=false;
+
+function buildDilemma(i){
+  dilAnswered=false;
+  const d=DILEMMAS[i];
+  document.getElementById('dil-prog').textContent=`שאלה ${i+1} מתוך ${DILEMMAS.length}`;
+  document.getElementById('dil-icon').textContent=d.icon;
+  document.getElementById('dil-q').textContent=d.q;
+  document.getElementById('peres-resp').classList.remove('show');
+  const next=document.getElementById('dil-next');
+  next.classList.remove('show');
+  next.textContent=i<DILEMMAS.length-1?'שאלה הבאה ←':'לחלום שלי ←';
+  const opts=document.getElementById('dil-opts');
+  opts.innerHTML='';
+  d.opts.forEach(o=>{
+    const btn=document.createElement('button');
+    btn.className='dopt';
+    btn.innerHTML=`<span class="dopt-bullet"></span>${o.t}`;
+    btn.onclick=()=>{
+      if(dilAnswered) return;
+      dilAnswered=true;
+      document.querySelectorAll('.dopt').forEach(b=>b.classList.remove('chosen'));
+      btn.classList.add('chosen');
+      document.getElementById('peres-resp-text').textContent=o.r;
+      document.getElementById('peres-resp').classList.add('show');
+      document.getElementById('dil-next').classList.add('show');
+    };
+    opts.appendChild(btn);
+  });
+}
+
+function nextDilemma(){
+  dilPhase++;
+  if(dilPhase>=DILEMMAS.length){ tourGo('s3'); dilPhase=0; return; }
+  buildDilemma(dilPhase);
+}
+
+/* ════════════════════════════════════════
+   DREAM MACHINE
+════════════════════════════════════════ */
+const MCARDS=[
+  {key:'dream',label:'החלום שלי',cards:['שייכות','שוויון','חיבור','חדשנות','תקווה'],bead:'tb1'},
+  {key:'step', label:'הצעד הראשון',cards:['שיחה','הזמנה','הקשבה','מפגש','שותפות'],bead:'tb2'},
+  {key:'courage',label:'האומץ',cards:['להקשיב','לטעות','להאמין','להתמיד','להתחיל'],bead:'tb3'},
+];
+const ST={dream:null,step:null,courage:null,message:'',path:null};
+let machinePhase=0;
+
+function initMachine(){
+  machinePhase=0; ST.dream=null; ST.step=null; ST.courage=null;
+  ['tb1','tb2','tb3'].forEach(id=>document.getElementById(id).textContent='—');
+  document.getElementById('thread-preview').classList.remove('show');
+  document.getElementById('machine-submit').style.opacity='0';
+  const container=document.getElementById('msteps'); container.innerHTML='';
+  MCARDS.forEach((ms,i)=>{
+    const div=document.createElement('div');
+    div.className='mstep'; div.id='ms'+i;
+    div.innerHTML=`<div class="mstep-label">${ms.label}</div>
+      <div class="mcards">${ms.cards.map(c=>`<button class="mcard" onclick="pickM(${i},'${c}',this)">${c}</button>`).join('')}</div>`;
+    container.appendChild(div);
+    if(i===0) setTimeout(()=>div.classList.add('show'),200);
+  });
+}
+
+function pickM(phase,val,btn){
+  document.querySelectorAll(`#ms${phase} .mcard`).forEach(b=>b.classList.remove('chosen'));
+  btn.classList.add('chosen');
+  ST[MCARDS[phase].key]=val;
+  document.getElementById(MCARDS[phase].bead).textContent=val;
+  document.getElementById('thread-preview').classList.add('show');
+  const next=document.getElementById('ms'+(phase+1));
+  if(next) setTimeout(()=>next.classList.add('show'),300);
+  if(ST.dream&&ST.step&&ST.courage) setTimeout(()=>document.getElementById('machine-submit').style.opacity='1',300);
+}
+
+function pullHandle(){
+  const h=document.getElementById('m-handle');
+  if(h){ h.classList.add('pulled'); setTimeout(()=>{ h.classList.remove('pulled'); openPath('B'); },280); }
+  else openPath('B');
+}
+
+function openPath(p){
+  ST.path=p;
+  document.getElementById('dream-gate').style.cssText='opacity:0;height:0;overflow:hidden';
+  if(p==='A'){
+    document.getElementById('path-a').classList.add('show');
+    const inp=document.getElementById('dream-text-a');
+    inp.value=''; document.getElementById('char-a').textContent='0';
+    inp.addEventListener('input',()=>document.getElementById('char-a').textContent=inp.value.length);
+    setTimeout(()=>inp.focus(),400);
+  } else {
+    document.getElementById('path-b').classList.add('show');
+    initMachine();
+  }
+}
+
+function submitDream(){
+  const val=document.getElementById('dream-text-a').value.trim();
+  if(val.length<3) return;
+  ST.message=val; saveToWall(val); tourGo('s4');
+}
+
+function submitMachine(){
+  const msg=[ST.dream,ST.step,ST.courage].filter(Boolean).join(' · ');
+  ST.message=msg; saveToWall(msg); tourGo('s4');
+}
+
+/* ════════════════════════════════════════
+   WALL DATA
+════════════════════════════════════════ */
+const SEEDS=[
+  'חיבור בין שכונה ובין אוניברסיטה',
+  'שיחה אחת עם מישהו שחושב אחרת',
+  'להקשיב לפני שאני יודע את התשובה',
+  'לפתוח דלת שלא ידעתי שקיימת',
+  'לזכור שכולנו מגיעים ממקום אחר',
+  'תקווה · מפגש · להתחיל',
+  'שוויון לכל ילד בכל מקום',
+  'חדשנות שמגיעה לכולם',
+  'שלום שמתחיל בשיחה',
+  'לחלום גדול ולהתחיל קטן',
+];
+(function seedWall(){
+  try{
+    if(!localStorage.getItem('pdc_journey')){
+      localStorage.setItem('pdc_journey',JSON.stringify(SEEDS.map(m=>({m}))));
+    }
+  }catch(e){}
+})();
+
+function saveToWall(msg){
+  try{
+    let w=JSON.parse(localStorage.getItem('pdc_journey')||'[]');
+    w.unshift({m:msg,mine:true});
+    if(w.length>50) w=w.slice(0,50);
+    localStorage.setItem('pdc_journey',JSON.stringify(w));
+  }catch(e){}
+}
+function loadWall(){
+  try{ return JSON.parse(localStorage.getItem('pdc_journey')||'[]'); }
+  catch(e){ return SEEDS.map(m=>({m})); }
+}
+
+/* ════════════════════════════════════════
+   WALL CANVAS — ANADOL STYLE
+════════════════════════════════════════ */
+const CLUSTER_COLORS=[
+  [200,160,64],[100,180,220],[200,100,60],[80,190,120],[160,100,220],[220,80,120]
+];
+let wallC, wCtx2, wW, wH, clusters=[], wallRunning=false, hoveredCluster=null;
+
+class DreamCluster {
+  constructor(text,idx,ismine){
+    this.text=text; this.mine=ismine;
+    this.col=CLUSTER_COLORS[idx%CLUSTER_COLORS.length];
+    this.cx=wW*.12+Math.random()*wW*.76;
+    this.cy=wH*.14+Math.random()*wH*.68;
+    this.vx=(Math.random()-.5)*.28;
+    this.vy=(Math.random()-.5)*.22;
+    this.particles=[];
+    const count=ismine?80:55;
+    for(let i=0;i<count;i++){
+      this.particles.push({
+        angle:Math.random()*Math.PI*2,
+        radius:8+Math.random()*30,
+        speed:(Math.random()-.5)*.012+(ismine?.002:0),
+        r:Math.random()*2+.6
+      });
+    }
+    this.hovered=false; this.scale=1;
+  }
+  update(){
+    this.cx+=this.vx; this.cy+=this.vy;
+    if(this.cx<70||this.cx>wW-70) this.vx*=-.92;
+    if(this.cy<60||this.cy>wH-90) this.vy*=-.92;
+    this.scale+=(this.hovered?1.6:1-this.scale)*.06;
+    this.particles.forEach(p=>p.angle+=p.speed);
+  }
+  draw(){
+    const [r,g,b]=this.col;
+    this.particles.forEach(p=>{
+      const x=this.cx+Math.cos(p.angle)*p.radius*this.scale;
+      const y=this.cy+Math.sin(p.angle)*p.radius*this.scale;
+      const a=this.hovered?.85:.45;
+      wCtx2.beginPath(); wCtx2.arc(x,y,p.r*(this.hovered?1.4:1),0,Math.PI*2);
+      wCtx2.fillStyle=`rgba(${r},${g},${b},${a})`; wCtx2.fill();
+    });
+    if(this.mine){
+      // Extra glow for own dream
+      const grd=wCtx2.createRadialGradient(this.cx,this.cy,0,this.cx,this.cy,45*this.scale);
+      grd.addColorStop(0,`rgba(${r},${g},${b},.06)`);
+      grd.addColorStop(1,'rgba(0,0,0,0)');
+      wCtx2.beginPath(); wCtx2.arc(this.cx,this.cy,45*this.scale,0,Math.PI*2);
+      wCtx2.fillStyle=grd; wCtx2.fill();
+    }
+    if(this.hovered){
+      // Text balloon
+      const txt=this.text;
+      const pad=14, maxW=220;
+      wCtx2.font='500 14px Heebo';
+      const lines=wrapText(txt,maxW-pad*2);
+      const bh=lines.length*22+pad*1.5;
+      const bx=this.cx-maxW/2, by=this.cy-bh-48*this.scale;
+      wCtx2.fillStyle='rgba(20,12,4,.92)';
+      wCtx2.strokeStyle=`rgba(${r},${g},${b},.6)`;
+      wCtx2.lineWidth=1;
+      wCtx2.beginPath();
+      wCtx2.roundRect(bx,by,maxW,bh,4);
+      wCtx2.fill(); wCtx2.stroke();
+      wCtx2.fillStyle=`rgba(${r},${g},${b},1)`;
+      wCtx2.textAlign='center';
+      lines.forEach((l,i)=>wCtx2.fillText(l,this.cx,by+pad+16+i*22));
+      wCtx2.textAlign='start';
+    }
+  }
+}
+
+function wrapText(text,maxW){
+  const words=text.split(' '); const lines=[]; let cur='';
+  words.forEach(w=>{
+    const test=cur?cur+' '+w:w;
+    if(wCtx2.measureText(test).width>maxW){ lines.push(cur); cur=w; }
+    else cur=test;
+  });
+  if(cur) lines.push(cur);
+  return lines;
+}
+
+function initWall(){
+  wallRunning=true;
+  wallC=document.getElementById('wallCanvas');
+  wallC.width=wW=innerWidth; wallC.height=wH=innerHeight;
+  wCtx2=wallC.getContext('2d');
+  const dreams=loadWall();
+  clusters=dream();
+  clusters=dreams.slice(0,22).map((d,i)=>new DreamCluster(d.m,i,d.mine));
+  wallC.addEventListener('mousemove',e=>{
+    hoveredCluster=null;
+    clusters.forEach(c=>{
+      const dx=e.clientX-c.cx, dy=e.clientY-c.cy;
+      c.hovered=Math.sqrt(dx*dx+dy*dy)<38;
+      if(c.hovered) hoveredCluster=c;
+    });
+  });
+  document.getElementById('wall-btns').classList.add('show');
+  animateWall();
+}
+
+function animateWall(){
+  if(!wallRunning||cur!=='s4') return;
+  wCtx2.fillStyle='rgba(4,3,2,.15)'; wCtx2.fillRect(0,0,wW,wH);
+  for(let i=0;i<clusters.length;i++){
+    for(let j=i+1;j<clusters.length;j++){
+      const dx=clusters[i].cx-clusters[j].cx, dy=clusters[i].cy-clusters[j].cy;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<160){
+        const a=(1-dist/160)*.12;
+        wCtx2.beginPath();
+        wCtx2.moveTo(clusters[i].cx,clusters[i].cy);
+        wCtx2.lineTo(clusters[j].cx,clusters[j].cy);
+        wCtx2.strokeStyle=`rgba(200,160,64,${a})`; wCtx2.lineWidth=.6; wCtx2.stroke();
+      }
+    }
+  }
+  clusters.forEach(c=>{c.update();c.draw()});
+  requestAnimationFrame(animateWall);
+}
+
+/* ════════════════════════════════════════
+   ON ENTER SCREEN
+════════════════════════════════════════ */
+function onEnter(id){
+  if(id==='s2') buildDilemma(0);
+  if(id==='s3'){
+    document.getElementById('dream-gate').style.cssText='';
+    document.getElementById('path-a').className='dream-input-wrap';
+    document.getElementById('path-b').className='machine-wrap';
+    ST.path=null;
+  }
+  if(id==='s4') initWall();
+}
+
+/* ════════════════════════════════════════
+   RESTART
+════════════════════════════════════════ */
+function restart(){
+  dilPhase=0; wallRunning=false;
+  ['dream-gate','path-a','path-b'].forEach(i=>{
+    const el=document.getElementById(i);
+    if(el){ el.style.cssText=''; el.className=el.id==='dream-gate'?'dream-gate':el.id==='path-a'?'dream-input-wrap':'machine-wrap'; }
+  });
+  document.getElementById('wall-btns').classList.remove('show');
+  tourGo('s1');
+}
+
+updateProgress();
+
+
+function openTour(){
+  document.getElementById('tour-overlay').style.display='block';
+  document.body.style.overflow='hidden';
+  document.querySelectorAll('#tour-overlay .screen').forEach(function(s){s.classList.remove('active');});
+  var s0=document.getElementById('s0'); if(s0) s0.classList.add('active');
+  cur='s0'; hist=['s0']; dilPhase=0;
+  document.querySelectorAll('.intro-stage').forEach(function(s){s.classList.remove('show');});
+  var i0=document.getElementById('intro-0'); if(i0) i0.classList.add('show');
+  wallRunning=false;
+  updateProgress();
+  runIntro();
+}
+function closeTour(){
+  document.getElementById('tour-overlay').style.display='none';
+  document.body.style.overflow='';
+  wallRunning=false;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>פאזל חלום — שביל החדשנות</title>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Assistant:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  background:#040410;
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  user-select:none;
+  overflow:hidden;
+  font-family:'Assistant',sans-serif;
+}
+#wrap{position:relative;display:inline-block;line-height:0;}
+#c{display:block;border-radius:12px;}
+
+/* ── Timer ── */
+#timer-display{
+  position:absolute;
+  top:10px;left:50%;transform:translateX(-50%);
+  background:rgba(0,0,0,.72);
+  border:1px solid rgba(255,215,0,.35);
+  border-radius:22px;padding:5px 20px;
+  font-size:17px;font-weight:700;color:#FFD700;
+  z-index:6;font-family:'Assistant',sans-serif;
+  letter-spacing:2px;pointer-events:none;
+  transition:color .3s,border-color .3s;
+}
+#timer-display.warning{color:#ff9900;border-color:rgba(255,153,0,.5);}
+#timer-display.urgent{color:#ff3333;border-color:rgba(255,50,50,.6);
+  animation:timerPulse .5s ease-in-out infinite;}
+@keyframes timerPulse{
+  0%,100%{transform:translateX(-50%) scale(1);}
+  50%{transform:translateX(-50%) scale(1.1);}
+}
+
+/* ── Timeout panel (same style as win panel) ── */
+#timeout-panel{
+  display:none;
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 45%,rgba(30,5,5,0.98) 0%,rgba(14,2,2,0.99) 100%);
+  flex-direction:column;align-items:center;justify-content:center;
+  gap:20px;padding:50px 80px;direction:rtl;text-align:center;
+  animation:winFadeIn .45s ease;z-index:10;border-radius:12px;
+}
+#timeout-panel .to-icon{font-size:52px;}
+#timeout-panel .to-title{
+  font-family:'Frank Ruhl Libre',serif;font-size:28px;font-weight:700;color:#ff4444;
+  text-shadow:0 0 20px rgba(255,60,60,.4);
+}
+#timeout-panel .to-msg{font-size:14px;color:rgba(255,255,255,.6);line-height:1.75;max-width:340px;}
+#timeout-panel .to-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:6px;}
+
+/* ── Exit button (always visible) ── */
+#exit-btn{
+  position:absolute;
+  top:10px;left:10px;
+  background:rgba(0,0,0,.55);
+  color:rgba(255,255,255,.42);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:16px;padding:5px 14px;
+  font-size:12px;cursor:pointer;
+  font-family:'Assistant',sans-serif;
+  z-index:5;
+  transition:color .2s,border-color .2s,background .2s;
+}
+#exit-btn:hover{color:#fff;border-color:rgba(255,255,255,.45);background:rgba(0,0,0,.78);}
+
+/* ── Win panel (FULL OVERLAY) ── */
+#win-panel{
+  display:none;
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse at 50% 45%,rgba(8,8,35,0.98) 0%,rgba(2,2,14,0.99) 100%);
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  padding:50px 80px;
+  direction:rtl;
+  text-align:center;
+  animation:winFadeIn .45s ease;
+  z-index:10;
+  border-radius:12px;
+}
+@keyframes winFadeIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+
+/* ── Provision badge in win ── */
+.win-provision{
+  font-size:14px;color:rgba(255,255,255,.65);
+  padding:10px 22px;
+  border:1px solid rgba(255,215,0,.25);
+  border-radius:14px;
+  background:rgba(255,215,0,.06);
+  line-height:1.8;
+}
+.prov-pill{
+  display:inline-block;
+  background:rgba(255,215,0,.15);
+  border:1px solid rgba(255,215,0,.5);
+  color:#FFD700;font-weight:700;
+  border-radius:12px;padding:2px 14px;
+  font-size:14px;
+  animation:pillPop .5s cubic-bezier(.34,1.56,.64,1) .2s both;
+}
+@keyframes pillPop{0%{transform:scale(.5);opacity:0}100%{transform:scale(1);opacity:1}}
+#win-panel .win-title{
+  color:#FFD700;
+  font-size:30px;font-weight:700;
+  font-family:'Frank Ruhl Libre',serif;
+  text-shadow:0 0 30px rgba(255,215,0,.4);
+  margin:0;
+}
+#win-panel .win-msg{
+  color:rgba(255,255,255,.82);
+  font-size:15px;line-height:1.85;
+  max-width:560px;margin:0;
+}
+#win-panel .win-msg strong{color:#FFD700;}
+#win-panel .win-actions{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:6px;
+}
+.btn-video{
+  background:rgba(255,210,0,.1);
+  color:#FFD700;
+  border:1px solid rgba(255,210,0,.45);
+  padding:10px 22px;border-radius:22px;
+  text-decoration:none;font-size:14px;font-weight:600;
+  font-family:'Assistant',sans-serif;
+  transition:background .15s,border-color .15s;cursor:pointer;
+}
+.btn-video:hover{background:rgba(255,210,0,.22);border-color:rgba(255,210,0,.75);}
+.btn-close{
+  background:rgba(255,255,255,.07);
+  color:rgba(255,255,255,.65);
+  border:1px solid rgba(255,255,255,.2);
+  padding:10px 22px;border-radius:22px;
+  font-size:14px;cursor:pointer;
+  font-family:'Assistant',sans-serif;
+  transition:background .15s,color .15s;
+}
+.btn-close:hover{background:rgba(255,255,255,.15);color:#fff;}
+.btn-video{
+  background:rgba(255,210,0,.1);
+  color:#FFD700;
+  border:1px solid rgba(255,210,0,.45);
+  padding:8px 20px;border-radius:20px;
+  text-decoration:none;font-size:13px;font-weight:600;
+  transition:background .15s,border-color .15s;
+  cursor:pointer;
+}
+.btn-video:hover{background:rgba(255,210,0,.22);border-color:rgba(255,210,0,.7);}
+.btn-close{
+  background:rgba(255,255,255,.07);
+  color:rgba(255,255,255,.65);
+  border:1px solid rgba(255,255,255,.2);
+  padding:8px 20px;border-radius:20px;
+  font-size:13px;cursor:pointer;
+  font-family:'Assistant',sans-serif;
+  transition:background .15s,color .15s;
+}
+.btn-close:hover{background:rgba(255,255,255,.14);color:#fff;}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <canvas id="c"></canvas>
+
+  <!-- Exit button (always visible) -->
+  <button id="exit-btn" onclick="exitToTrail()">← שביל החדשנות</button>
+
+  <!-- Timer -->
+  <div id="timer-display">⏱ 3:00</div>
+
+  <!-- Timeout panel -->
+  <div id="timeout-panel">
+    <div class="to-icon">⏰</div>
+    <div class="to-title">הזמן נגמר!</div>
+    <p class="to-msg">
+      הפאזל לא הושלם בזמן.<br>
+      אבל כל חלום שווה ניסיון נוסף — לא?
+    </p>
+    <div class="to-actions">
+      <button class="btn-close" onclick="retryAfterTimeout()">🔄 נסי שוב</button>
+      <button class="btn-video" style="background:rgba(255,255,255,.07);color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.2);" onclick="exitToTrail()">← יציאה</button>
+    </div>
+  </div>
+
+  <!-- Win overlay panel — TOP -->
+  <div id="win-panel">
+    <div class="win-provision">
+      🎒 צידה לדרך שנצברה:
+      <span class="prov-pill">🔤 חיבורים</span>
+      — תמצאי אותה בסל הכלים במסך הראשי
+    </div>
+    <div class="win-title">✨ החלום הושלם!</div>
+    <p class="win-msg">
+      כתב ערברית מזכיר לנו: <strong>חיבורים</strong> בין שפות, תרבויות ועמים
+      הם הבסיס של כל אקוסיסטם חברתי בריא ויצירתי —
+      כי כשמוצאים שורשים משותפים, נולדת חדשנות אמיתית.
+    </p>
+    <div class="win-actions">
+      <a class="btn-video"
+         href="https://culturetreasures.com/he/liron-lavi-turknich-hebrew/"
+         target="_blank" rel="noopener">
+        ▶ לירון לביא טורקניץ׳ — שפה ואקטיביזם
+      </a>
+      <button class="btn-video" style="background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.25);" onclick="replayPuzzle()">🔄 שחק שוב</button>
+      <button class="btn-close" onclick="closeWin()">← המשך לשביל החדשנות</button>
+    </div>
+  </div>
+</div>
+<script>
+// ══════════════════════════════════════
+//  CONFIG
+// ══════════════════════════════════════
+const COLS = 5, ROWS = 3, N = COLS * ROWS;
+const PW = 110, PH = 90;    // base piece size
+const TAB = 22;              // tab protrusion in px
+const SNAP = 22;             // snap-to-place distance
+const CW = 780, CH = 530;   // canvas size
+
+const PZ_X = (CW - COLS * PW) / 2;          // puzzle left edge
+const PZ_Y = (CH - ROWS * PH) / 2 + 5;      // puzzle top edge
+
+// ══════════════════════════════════════
+//  CANVAS
+// ══════════════════════════════════════
+const cvs = document.getElementById('c');
+cvs.width = CW; cvs.height = CH;
+const ctx = cvs.getContext('2d');
+
+// ══════════════════════════════════════
+//  CONNECTORS
+//  hConn[r][c] : connector between col c and col c+1 in row r
+//    +1 → piece[r][c] right has TAB-OUT,   piece[r][c+1] left has BLANK-IN
+//    -1 → piece[r][c] right has BLANK-IN,  piece[r][c+1] left has TAB-OUT
+//  vConn[r][c] : connector between row r and row r+1 in col c
+//    +1 → piece[r][c] bottom has TAB-OUT,  piece[r+1][c] top has BLANK-IN
+//    -1 → piece[r][c] bottom has BLANK-IN, piece[r+1][c] top has TAB-OUT
+// ══════════════════════════════════════
+let hConn = [], vConn = [];
+
+function genConns() {
+  hConn = Array.from({length: ROWS}, () =>
+    Array.from({length: COLS - 1}, () => (Math.random() < .5 ? 1 : -1)));
+  vConn = Array.from({length: ROWS - 1}, () =>
+    Array.from({length: COLS}, () => (Math.random() < .5 ? 1 : -1)));
+}
+
+// Returns connector type for a piece edge: 0=flat border, +1=tab-out, -1=blank-in
+function conn(r, c, edge) {
+  if (edge === 'top')    return r === 0        ? 0 : -vConn[r-1][c];
+  if (edge === 'bottom') return r === ROWS - 1 ? 0 :  vConn[r][c];
+  if (edge === 'left')   return c === 0        ? 0 : -hConn[r][c-1];
+  if (edge === 'right')  return c === COLS - 1 ? 0 :  hConn[r][c];
+}
+
+// ══════════════════════════════════════
+//  PIECE PATH BUILDER
+//  Origin (0,0) = top-left of piece base rect
+// ══════════════════════════════════════
+function buildPath(r, c) {
+  const p = new Path2D();
+  p.moveTo(0, 0);
+  addEdge(p, 0,  0,  PW, 0,   0, -1, conn(r, c, 'top'));     // → normal UP
+  addEdge(p, PW, 0,  PW, PH,  1,  0, conn(r, c, 'right'));   // ↓ normal RIGHT
+  addEdge(p, PW, PH, 0,  PH,  0,  1, conn(r, c, 'bottom'));  // ← normal DOWN
+  addEdge(p, 0,  PH, 0,  0,  -1,  0, conn(r, c, 'left'));    // ↑ normal LEFT
+  p.closePath();
+  return p;
+}
+
+// Draws one jigsaw edge.
+// (x1,y1)→(x2,y2) : edge direction
+// (nx,ny)          : outward normal
+// type             : 0=flat | +1=tab-out | -1=blank-in
+function addEdge(p, x1, y1, x2, y2, nx, ny, type) {
+  if (!type) { p.lineTo(x2, y2); return; }
+
+  const dx = x2 - x1, dy = y2 - y1;
+  const len = Math.sqrt(dx*dx + dy*dy);
+  const ux = dx/len, uy = dy/len;   // unit edge vector
+  const h  = TAB * type;             // height of tab (positive = out)
+  const w  = len * 0.17;             // half-width of tab neck
+
+  const mx = (x1+x2)/2, my = (y1+y2)/2;  // edge midpoint
+  const ax = mx - ux*w,  ay = my - uy*w;  // neck start
+  const bx = mx + nx*h,  by = my + ny*h;  // tip
+  const cx = mx + ux*w,  cy = my + uy*w;  // neck end
+
+  p.lineTo(ax, ay);
+  // curve in to tip
+  p.bezierCurveTo(
+    ax + nx*h*.5, ay + ny*h*.5,
+    bx - ux*w*.8, by - uy*w*.8,
+    bx, by
+  );
+  // curve out from tip
+  p.bezierCurveTo(
+    bx + ux*w*.8, by + uy*w*.8,
+    cx + nx*h*.5, cy + ny*h*.5,
+    cx, cy
+  );
+  p.lineTo(x2, y2);
+}
+
+// ══════════════════════════════════════
+//  IMAGE URLS
+//  ARAVRIT_URL  — "חלום" bilingual image (Liron Lavi Turkenich)
+//  PERES_URL    — Peres character illustration (for gesher-demo.html)
+// ══════════════════════════════════════
+// Aravrit "חיבורים" image by Liron Lavi Turkenich (saved from her site)
+const ARAVRIT_URL = 'aravrit-word.png';
+// Peres character URL — saved for gesher-demo.html
+const PERES_URL   = 'https://cdn.phototourl.com/free/2026-06-27-14d8f7ac-d487-4d14-b0bd-ccc2a971e8a6.png';
+
+// ══════════════════════════════════════
+//  SOURCE IMAGE
+// ══════════════════════════════════════
+const SRC_W = COLS * PW, SRC_H = ROWS * PH;  // 550 × 270
+const srcCvs = Object.assign(document.createElement('canvas'),
+  { width: SRC_W, height: SRC_H });
+const sc = srcCvs.getContext('2d');
+
+// Load the Aravrit "חלום" image
+const srcImg = new Image();
+srcImg.src = ARAVRIT_URL;
+
+const imgReady = new Promise(res => {
+  srcImg.onload  = () => res(true);
+  srcImg.onerror = () => res(false);   // fallback on error
+});
+
+// Draw external image into srcCvs (scale-to-fit with padding, warm background)
+function drawSource(imgLoaded) {
+  if (imgLoaded && srcImg.naturalWidth > 0) {
+    const pad = 24;
+    const iw = srcImg.naturalWidth, ih = srcImg.naturalHeight;
+    const scale = Math.min((SRC_W - pad*2) / iw, (SRC_H - pad*2) / ih);
+    const dw = iw * scale, dh = ih * scale;
+    const ox = (SRC_W - dw) / 2, oy = (SRC_H - dh) / 2;
+
+    // Warm parchment background
+    const g = sc.createLinearGradient(0, 0, SRC_W, SRC_H);
+    g.addColorStop(0, '#fdf8ef');
+    g.addColorStop(1, '#f5ede0');
+    sc.fillStyle = g;
+    sc.fillRect(0, 0, SRC_W, SRC_H);
+
+    // Subtle texture dots
+    for (let i = 0; i < 120; i++) {
+      sc.fillStyle = `rgba(180,150,100,${Math.random()*.06+.01})`;
+      sc.fillRect(Math.random()*SRC_W, Math.random()*SRC_H, 1, 1);
+    }
+
+    // Draw the Aravrit image
+    sc.drawImage(srcImg, ox, oy, dw, dh);
+  } else {
+    // ── Fallback: generated night-sky with "חלום" ──
+    const g = sc.createLinearGradient(0, 0, SRC_W, SRC_H);
+    g.addColorStop(0, '#1e0065'); g.addColorStop(.45, '#060032'); g.addColorStop(1, '#001840');
+    sc.fillStyle = g; sc.fillRect(0, 0, SRC_W, SRC_H);
+    for (let i = 0; i < 90; i++) {
+      sc.fillStyle = `rgba(255,248,210,${Math.random()*.75+.15})`;
+      sc.beginPath();
+      sc.arc(Math.random()*SRC_W, Math.random()*SRC_H, Math.random()*1.4+.2, 0, Math.PI*2);
+      sc.fill();
+    }
+    sc.textAlign='center'; sc.textBaseline='middle';
+    sc.font = '900 195px "Frank Ruhl Libre",serif';
+    sc.shadowColor='#9955ff'; sc.shadowBlur=40;
+    sc.fillStyle='rgba(255,255,255,.15)';
+    sc.fillText('חלום', SRC_W/2, SRC_H/2+8);
+    sc.shadowBlur=0;
+    const tg=sc.createLinearGradient(SRC_W*.08,0,SRC_W*.92,0);
+    tg.addColorStop(0,'#fff'); tg.addColorStop(.3,'#ddc8ff');
+    tg.addColorStop(.65,'#8ab0ff'); tg.addColorStop(1,'#fff');
+    sc.fillStyle=tg;
+    sc.fillText('חלום', SRC_W/2, SRC_H/2+8);
+  }
+}
+
+// ══════════════════════════════════════
+//  PIECES STATE
+// ══════════════════════════════════════
+let pieces = [], dragging = null, dragOX = 0, dragOY = 0;
+let maxZ = N, placedCount = 0, solved = false;
+
+// ── Timer ──
+const TIMER_SECONDS = 180; // 3 minutes
+let timerLeft = TIMER_SECONDS, timerInterval = null;
+
+function startTimer(){
+  timerLeft = TIMER_SECONDS;
+  updateTimerDisplay();
+  clearInterval(timerInterval);
+  timerInterval = setInterval(()=>{
+    if(solved){ clearInterval(timerInterval); return; }
+    timerLeft--;
+    updateTimerDisplay();
+    if(timerLeft <= 0){
+      clearInterval(timerInterval);
+      showTimeout();
+    }
+  }, 1000);
+}
+
+function stopTimer(){
+  clearInterval(timerInterval);
+}
+
+function updateTimerDisplay(){
+  const m = Math.floor(timerLeft/60);
+  const s = timerLeft % 60;
+  const el = document.getElementById('timer-display');
+  el.textContent = `⏱ ${m}:${s.toString().padStart(2,'0')}`;
+  el.classList.remove('warning','urgent');
+  if(timerLeft <= 10)      el.classList.add('urgent');
+  else if(timerLeft <= 30) el.classList.add('warning');
+}
+
+function showTimeout(){
+  solved = true; // freeze interaction
+  document.getElementById('timeout-panel').style.display = 'flex';
+}
+
+function retryAfterTimeout(){
+  document.getElementById('timeout-panel').style.display = 'none';
+  resetGame();
+}
+
+function scatter() {
+  // Scatter pieces all over canvas, avoid piling exactly on same spot
+  pieces = [];
+  placedCount = 0; dragging = null; solved = false;
+  const used = [];
+
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      let x, y, ok, tries = 0;
+      do {
+        x = TAB + Math.random() * (CW - PW - TAB*2);
+        y = TAB + Math.random() * (CH - PH - TAB*2);
+        ok = used.every(u => Math.abs(u.x-x) > PW*.6 || Math.abs(u.y-y) > PH*.6);
+      } while (!ok && ++tries < 30);
+
+      used.push({x, y});
+      pieces.push({
+        r, c,
+        x, y,
+        tx: PZ_X + c * PW,
+        ty: PZ_Y + r * PH,
+        placed: false,
+        path: buildPath(r, c),
+        z: tries   // pseudo-random initial z
+      });
+    }
+  }
+}
+
+// ══════════════════════════════════════
+//  RENDER
+// ══════════════════════════════════════
+function draw() {
+  ctx.clearRect(0, 0, CW, CH);
+
+  // Background
+  const bg = ctx.createRadialGradient(CW/2, CH*.44, 0, CW/2, CH*.44, CW*.72);
+  bg.addColorStop(0, '#0e0e2a');
+  bg.addColorStop(1, '#040410');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, CW, CH);
+
+  drawTargetRect();
+
+  // Draw all pieces sorted by z
+  [...pieces].sort((a, b) => a.z - b.z).forEach(drawPiece);
+}
+
+// ── Target rectangle with corner brackets ──
+function drawTargetRect() {
+  const mg = 10; // margin outside puzzle area
+  const rx = PZ_X - mg, ry = PZ_Y - mg;
+  const rw = COLS*PW + mg*2, rh = ROWS*PH + mg*2;
+  const arm = 22;  // bracket arm length
+
+  const done = placedCount === N;
+  const baseAlpha = done ? 1 : 0;
+  const col = done ? [40,255,100] : [255,205,0];
+  const ca = `rgba(${col},`;
+
+  ctx.save();
+
+  // Subtle fill inside target area
+  ctx.fillStyle = done
+    ? 'rgba(30,255,90,.06)'
+    : 'rgba(255,255,255,.025)';
+  ctx.fillRect(rx, ry, rw, rh);
+
+  // Dashed full border
+  ctx.setLineDash([4, 8]);
+  ctx.strokeStyle = done ? `rgba(40,255,100,.5)` : `rgba(255,205,0,.2)`;
+  ctx.lineWidth = 1.5;
+  ctx.strokeRect(rx, ry, rw, rh);
+  ctx.setLineDash([]);
+
+  // Bold corner brackets
+  if (done) { ctx.shadowColor = '#40ff60'; ctx.shadowBlur = 14; }
+  ctx.strokeStyle = done ? 'rgba(40,255,100,.95)' : 'rgba(255,205,0,.65)';
+  ctx.lineWidth = 3;
+  ctx.lineCap = 'square';
+  [
+    [rx,    ry,    1,  1],
+    [rx+rw, ry,   -1,  1],
+    [rx,    ry+rh, 1, -1],
+    [rx+rw, ry+rh,-1, -1]
+  ].forEach(([x,y,sx,sy]) => {
+    ctx.beginPath();
+    ctx.moveTo(x + sx*arm, y);
+    ctx.lineTo(x, y);
+    ctx.lineTo(x, y + sy*arm);
+    ctx.stroke();
+  });
+  ctx.shadowBlur = 0;
+
+  // Counter / status label above the rectangle
+  const label = done ? '✓ הושלם!' : `${placedCount} / ${N}`;
+  ctx.font = done ? 'bold 14px "Assistant",sans-serif' : '12px "Assistant",sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillStyle = done ? 'rgba(40,255,100,.95)' : 'rgba(255,205,0,.6)';
+  if (done) { ctx.shadowColor = '#40ff60'; ctx.shadowBlur = 8; }
+  ctx.fillText(label, rx + rw/2, ry - 8);
+  ctx.shadowBlur = 0;
+
+  ctx.restore();
+}
+
+function drawPiece(pc) {
+  // ── Drop shadow (manual, reliable) ──
+  ctx.save();
+  ctx.translate(pc.x + 2, pc.y + 5);
+  ctx.fillStyle = 'rgba(0,0,20,.45)';
+  ctx.fill(pc.path);
+  ctx.restore();
+
+  // ── Clip + image ──
+  ctx.save();
+  ctx.translate(pc.x, pc.y);
+  ctx.clip(pc.path);
+
+  // Draw source so piece(c,r)'s top-left aligns with local origin (0,0)
+  ctx.drawImage(srcCvs, -pc.c * PW, -pc.r * PH);
+
+  // Green tint overlay for placed pieces
+  if (pc.placed) {
+    ctx.fillStyle = 'rgba(40,255,100,.07)';
+    ctx.fillRect(-TAB, -TAB, PW + TAB*2, PH + TAB*2);
+  }
+
+  // Border
+  const isDrag = pc === dragging;
+  ctx.strokeStyle =
+    isDrag      ? 'rgba(255,215,0,.85)'   :
+    pc.placed   ? 'rgba(60,245,110,.55)'  :
+                  'rgba(255,255,255,.2)';
+  ctx.lineWidth = isDrag ? 2.5 : 1.5;
+  ctx.stroke(pc.path);
+
+  ctx.restore();
+}
+
+// ══════════════════════════════════════
+//  INPUT
+// ══════════════════════════════════════
+function evtPos(e) {
+  const r = cvs.getBoundingClientRect();
+  const t = e.touches ? e.touches[0] : e;
+  return {
+    x: (t.clientX - r.left) * (CW / r.width),
+    y: (t.clientY - r.top)  * (CH / r.height)
+  };
+}
+
+function topPieceAt(mx, my) {
+  const sorted = [...pieces].sort((a, b) => b.z - a.z);
+  for (const pc of sorted) {
+    if (pc.placed) continue;
+    const lx = mx - pc.x, ly = my - pc.y;
+    if (lx > -TAB && lx < PW+TAB && ly > -TAB && ly < PH+TAB) return pc;
+  }
+  return null;
+}
+
+function onDown(e) {
+  if (solved) return;
+  e.preventDefault();
+  const {x, y} = evtPos(e);
+  const pc = topPieceAt(x, y);
+  if (!pc) return;
+  dragging = pc;
+  dragOX = x - pc.x;
+  dragOY = y - pc.y;
+  pc.z = ++maxZ;
+  cvs.style.cursor = 'grabbing';
+  draw();
+}
+
+function onMove(e) {
+  if (!dragging) return;
+  e.preventDefault();
+  const {x, y} = evtPos(e);
+  dragging.x = x - dragOX;
+  dragging.y = y - dragOY;
+  draw();
+}
+
+function onUp() {
+  if (!dragging) return;
+  const pc = dragging;
+  dragging = null;
+  cvs.style.cursor = 'default';
+
+  if (!pc.placed) {
+    const dx = pc.x - pc.tx, dy = pc.y - pc.ty;
+    if (Math.abs(dx) < SNAP && Math.abs(dy) < SNAP) {
+      pc.x = pc.tx; pc.y = pc.ty;
+      pc.placed = true;
+      pc.z = -1;       // sink behind everything
+      placedCount++;
+      if (placedCount === N) setTimeout(showWin, 350);
+    }
+  }
+
+  draw();
+}
+
+cvs.addEventListener('mousedown', onDown);
+window.addEventListener('mousemove', onMove);
+window.addEventListener('mouseup',  onUp);
+cvs.addEventListener('touchstart', onDown, {passive: false});
+window.addEventListener('touchmove', onMove, {passive: false});
+window.addEventListener('touchend',  onUp,  {passive: false});
+
+// ══════════════════════════════════════
+//  WIN SCREEN
+// ══════════════════════════════════════
+function showWin() {
+  solved = true;
+  stopTimer(); // freeze the clock on win
+
+  // Draw assembled image on canvas
+  const bg = ctx.createRadialGradient(CW/2, CH*.44, 0, CW/2, CH*.44, CW*.72);
+  bg.addColorStop(0, '#0e0e2a'); bg.addColorStop(1, '#040410');
+  ctx.fillStyle = bg; ctx.fillRect(0, 0, CW, CH);
+
+  drawTargetRect();
+
+  ctx.shadowColor = '#c8903a'; ctx.shadowBlur = 40;
+  ctx.drawImage(srcCvs, PZ_X, PZ_Y);
+  ctx.shadowBlur = 0;
+
+  // Show HTML panel (flex = centered full overlay)
+  document.getElementById('win-panel').style.display = 'flex';
+}
+
+function closeWin() {
+  localStorage.setItem('shvil_chalum_done', '1');
+  window.location.href = 'gesher-demo.html?from=chalum';
+}
+
+function replayPuzzle() {
+  document.getElementById('win-panel').style.display = 'none';
+  resetGame();
+}
+
+function exitToTrail() {
+  window.location.href = 'gesher-demo.html';
+}
+
+// rounded rect helper
+function rrect(c, x, y, w, h, r) {
+  c.beginPath();
+  c.moveTo(x+r, y);
+  c.lineTo(x+w-r, y);   c.arcTo(x+w, y,   x+w, y+r,   r);
+  c.lineTo(x+w, y+h-r); c.arcTo(x+w, y+h, x+w-r, y+h, r);
+  c.lineTo(x+r, y+h);   c.arcTo(x,   y+h, x,   y+h-r, r);
+  c.lineTo(x, y+r);     c.arcTo(x,   y,   x+r, y,      r);
+  c.closePath();
+}
+
+// ══════════════════════════════════════
+//  RESET
+// ══════════════════════════════════════
+function resetGame() {
+  genConns();
+  pieces.forEach(pc => {
+    pc.path = buildPath(pc.r, pc.c);
+    pc.placed = false;
+  });
+  scatter();
+  draw();
+  startTimer(); // restart 3-min countdown
+}
+
+// ══════════════════════════════════════
+//  START  (wait for font + image)
+// ══════════════════════════════════════
+Promise.all([document.fonts.ready, imgReady]).then(([_, imgLoaded]) => {
+  genConns();
+  drawSource(imgLoaded);
+  scatter();
+  draw();
+  startTimer(); // begin countdown on first load
+});
+</script>
+</body>
+</html>
