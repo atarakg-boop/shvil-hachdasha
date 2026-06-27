@@ -1,1 +1,812 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>שביל החדשנות</title>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@600;700;800&family=Frank+Ruhl+Libre:wght@700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  background:#0a1a0a;
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:'Assistant',sans-serif;
+  overflow:hidden;
+}
+#topbar{
+  width:800px;height:48px;
+  background:rgba(5,15,5,.95);
+  border-bottom:1px solid rgba(255,210,0,.2);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 16px;
+  flex-shrink:0;
+  direction:rtl;
+}
+#topbar h1{font-family:'Frank Ruhl Libre',serif;font-size:18px;color:#FFD700;letter-spacing:.5px;}
+#topbar .sub{font-size:10px;color:rgba(255,255,255,.3);}
+#eco-wrap{display:flex;align-items:center;gap:8px;}
+#eco-label{font-size:11px;color:rgba(255,255,255,.4);}
+#eco-track{width:110px;height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;border:1px solid rgba(255,255,255,.1);}
+#eco-fill{height:100%;width:0%;background:linear-gradient(90deg,#22cc55,#88ffaa);border-radius:4px;transition:width 1.2s ease;}
+#eco-pct{font-size:11px;color:#88ffaa;font-weight:700;min-width:30px;text-align:left;}
 
+#game{width:800px;height:520px;overflow:hidden;position:relative;}
+
+/* dialog box */
+#dialog{
+  display:none;
+  position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+  width:680px;
+  background:rgba(5,20,5,.96);
+  border:2px solid #FFD700;
+  border-radius:10px;padding:14px 20px 12px;
+  direction:rtl;text-align:center;
+  z-index:20;
+  animation:dialogIn .2s ease;
+}
+@keyframes dialogIn{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+#dialog .d-title{font-size:14px;font-weight:700;color:#FFD700;margin-bottom:6px;}
+#dialog .d-body{font-size:13px;color:rgba(255,255,255,.8);line-height:1.6;}
+#dialog .d-hint{font-size:11px;color:rgba(255,215,0,.55);margin-top:8px;}
+
+/* provision badges */
+#provisions{
+  position:absolute;bottom:8px;right:8px;
+  display:flex;flex-direction:column;gap:6px;
+  z-index:20;direction:rtl;
+}
+.prov-b{
+  display:flex;align-items:center;gap:7px;
+  background:rgba(0,0,0,.7);
+  border:1px solid rgba(255,215,0,.2);
+  border-radius:14px;padding:5px 12px;
+  opacity:.2;transition:opacity .5s,border-color .4s;
+}
+.prov-b.earned{opacity:1;border-color:rgba(255,215,0,.55);}
+.prov-b .pb-icon{font-size:16px;}
+.prov-b .pb-txt{font-size:11px;font-weight:700;color:#FFD700;}
+
+/* toast */
+#toast{
+  position:absolute;top:8px;left:50%;transform:translateX(-50%) translateY(-80px);
+  background:rgba(5,50,15,.96);border:1px solid #40ff80;border-radius:10px;
+  padding:9px 24px;text-align:center;z-index:30;
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1);pointer-events:none;
+}
+#toast.show{transform:translateX(-50%) translateY(0);}
+.t-ttl{font-size:13px;font-weight:700;color:#40ff80;}
+.t-sub{font-size:11px;color:rgba(255,255,255,.5);margin-top:2px;}
+
+/* celebration */
+#celebrate{
+  display:none;position:absolute;inset:0;z-index:40;
+  background:rgba(2,10,2,.9);flex-direction:column;align-items:center;justify-content:center;
+  gap:14px;text-align:center;backdrop-filter:blur(3px);
+}
+#celebrate h2{font-family:'Frank Ruhl Libre',serif;font-size:30px;color:#FFD700;}
+#celebrate p{font-size:14px;color:rgba(255,255,255,.75);max-width:400px;line-height:1.85;}
+.c-badges{display:flex;gap:12px;justify-content:center;}
+.c-badge{background:rgba(255,215,0,.12);border:1px solid rgba(255,215,0,.5);border-radius:16px;padding:8px 18px;font-size:13px;color:#FFD700;font-weight:700;}
+#celebrate button{background:#FFD700;color:#050510;border:none;padding:10px 30px;border-radius:22px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Assistant',sans-serif;}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div>
+    <h1>🧭 שביל החדשנות</h1>
+    <div class="sub">מרכז פרס לשלום וחדשנות</div>
+  </div>
+  <div id="eco-wrap">
+    <div id="eco-label">🌱 אקוסיסטם</div>
+    <div id="eco-track"><div id="eco-fill"></div></div>
+    <div id="eco-pct">0%</div>
+  </div>
+</div>
+
+<div id="game">
+  <div id="dialog" onclick="window._closeDialogIfOpen&&window._closeDialogIfOpen()" style="cursor:pointer;">
+    <button id="d-close" onclick="event.stopPropagation();window._closeDialogIfOpen&&window._closeDialogIfOpen()" style="
+      position:absolute;top:8px;left:10px;
+      background:rgba(255,255,255,.08);border:1px solid rgba(255,215,0,.3);
+      color:rgba(255,215,0,.7);font-size:13px;
+      width:26px;height:26px;border-radius:50%;cursor:pointer;
+      font-family:sans-serif;line-height:1;transition:background .15s;
+    " title="סגור">✕</button>
+    <div class="d-title" id="d-title"></div>
+    <div class="d-body"  id="d-body"></div>
+    <div class="d-hint"  id="d-hint">לחצי כאן / E / Space לסגירה</div>
+  </div>
+
+  <div id="provisions">
+    <div class="prov-b" id="prov-chalum">
+      <span class="pb-icon">🔤</span>
+      <span class="pb-txt">חיבורים</span>
+    </div>
+    <div class="prov-b" id="prov-maze">
+      <span class="pb-icon">🎓</span>
+      <span class="pb-txt">כ״א מיומן</span>
+    </div>
+  </div>
+
+  <div id="toast">
+    <div class="t-ttl" id="t-ttl"></div>
+    <div class="t-sub" id="t-sub"></div>
+  </div>
+
+  <div id="celebrate">
+    <div style="font-size:50px">🌟</div>
+    <h2>האקוסיסטם חי!</h2>
+    <p>השלמת את שביל החדשנות.<br>
+    חיבורים בין-תרבותיים + כ״א מיומן =<br>
+    <strong style="color:#FFD700">אקוסיסטם חדשנות בגליל.</strong></p>
+    <div class="c-badges">
+      <div class="c-badge">🔤 חיבורים</div>
+      <div class="c-badge">🎓 כ״א מיומן</div>
+    </div>
+    <button onclick="restartJourney()">🔄 התחל מחדש</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
+<script>
+// ═══════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════
+const KEY_C = 'shvil_chalum_done';
+const KEY_M = 'shvil_maze_done';
+const KEY_S = 'shvil_started';
+
+let chalumDone = localStorage.getItem(KEY_C) === '1';
+let mazeDone   = localStorage.getItem(KEY_M) === '1';
+
+function restartJourney(){
+  [KEY_C,KEY_M,KEY_S].forEach(k=>localStorage.removeItem(k));
+  location.reload();
+}
+
+// ═══════════════════════════════════════════════════
+//  MAP  (25 wide × 40 tall, TILE=32px)
+//  Main path: columns 11-12
+//  South start: row 38, col 12
+// ═══════════════════════════════════════════════════
+const GR=1,PT=2,TR=3,WL=4,RF=5,DS=6,DN=7,RV=8,BR=9,RK=10,OL=11,FL=12,SG=13,FP=14;
+const WALKABLE = new Set([GR,PT,FL,SG,FP]);
+// BR is walkable only if chalumDone
+
+const MAP = [
+  // ── ROW 0-7: Kiryat Shmona ──────────────────────────
+  [TR,TR,WL,WL,WL,WL,WL,WL,WL,WL,WL,WL,WL,WL,WL,WL,WL,WL,WL,WL,WL,WL,WL,TR,TR],//0
+  [TR,TR,WL,RF,RF,RF,RF,WL,WL,RF,RF,RF,RF,RF,WL,WL,RF,RF,RF,RF,WL,WL,WL,TR,TR],  //1
+  [GR,GR,WL,WL,WL,WL,WL,WL,PT,WL,WL,WL,WL,WL,WL,PT,WL,WL,WL,WL,WL,PT,WL,GR,GR],//2
+  [GR,GR,PT,PT,PT,PT,PT,PT,PT,PT,PT,DN,PT,PT,PT,PT,PT,PT,PT,PT,PT,PT,PT,GR,GR], //3 maze door
+  [GR,GR,PT,PT,PT,PT,PT,PT,PT,PT,PT,PT,PT,PT,PT,PT,PT,PT,PT,PT,PT,PT,PT,GR,GR], //4
+  [GR,TR,GR,GR,GR,GR,GR,GR,GR,GR,PT,PT,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,TR,GR],//5
+  [GR,GR,GR,TR,GR,FL,GR,GR,TR,GR,PT,PT,GR,GR,TR,GR,FL,GR,GR,TR,GR,GR,GR,GR,GR],//6
+  [GR,GR,TR,GR,GR,GR,GR,GR,GR,GR,PT,PT,GR,GR,GR,GR,GR,GR,GR,TR,GR,GR,GR,GR,GR],//7
+
+  // ── ROW 8-14: Northern countryside ──────────────────
+  [GR,GR,GR,GR,OL,GR,GR,GR,TR,GR,PT,PT,GR,TR,GR,GR,GR,OL,GR,GR,TR,GR,GR,GR,GR],//8
+  [FL,GR,GR,OL,GR,GR,GR,GR,GR,GR,PT,PT,GR,GR,GR,OL,GR,GR,GR,GR,GR,GR,GR,FL,GR],//9
+  [GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,PT,PT,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR],//10
+  [GR,TR,GR,GR,FL,GR,GR,TR,GR,GR,PT,PT,GR,GR,TR,GR,GR,FL,GR,GR,TR,GR,GR,GR,TR],//11
+
+  // ── ROW 12-15: Forest ────────────────────────────────
+  [TR,TR,TR,GR,GR,GR,TR,TR,GR,GR,PT,PT,GR,GR,TR,TR,GR,GR,GR,TR,TR,TR,GR,TR,TR],//12
+  [TR,TR,GR,GR,GR,GR,GR,TR,GR,GR,PT,PT,GR,GR,TR,GR,GR,GR,GR,GR,TR,TR,GR,TR,TR],//13
+  [TR,GR,GR,GR,FL,GR,GR,GR,GR,GR,PT,PT,GR,GR,GR,GR,GR,FL,GR,GR,GR,GR,GR,GR,TR],//14
+  [GR,GR,GR,TR,GR,GR,GR,GR,TR,GR,PT,PT,GR,TR,GR,GR,GR,GR,GR,TR,GR,GR,GR,GR,GR],//15
+
+  // ── ROW 16-17: RIVER ─────────────────────────────────
+  [RV,RV,RV,RV,RV,RV,RV,RV,RV,RV,BR,BR,RV,RV,RV,RV,RV,RV,RV,RV,RV,RV,RV,RV,RV],//16
+  [RV,RV,RV,RV,RV,RV,RV,RV,RV,RV,BR,BR,RV,RV,RV,RV,RV,RV,RV,RV,RV,RV,RV,RV,RV],//17
+
+  // ── ROW 18-25: Galilee middle trail ──────────────────
+  [GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,PT,PT,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR],//18
+  [GR,GR,OL,GR,GR,FL,GR,GR,GR,GR,PT,PT,GR,GR,GR,FL,GR,GR,OL,GR,GR,GR,GR,GR,GR],//19
+  [GR,GR,GR,OL,GR,GR,GR,GR,GR,GR,PT,PT,GR,GR,GR,GR,OL,GR,GR,GR,GR,GR,OL,GR,GR],//20
+  [GR,OL,GR,GR,GR,GR,FL,GR,GR,GR,PT,PT,GR,GR,FL,GR,GR,GR,GR,OL,GR,GR,GR,GR,GR],//21
+  [GR,GR,GR,GR,GR,GR,GR,GR,TR,GR,PT,PT,GR,TR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR],//22
+  [GR,GR,RK,GR,GR,GR,GR,GR,GR,GR,PT,PT,GR,GR,GR,GR,GR,RK,GR,GR,GR,GR,GR,GR,GR],//23
+  [GR,GR,GR,GR,OL,OL,GR,GR,GR,GR,PT,PT,GR,GR,GR,OL,OL,GR,GR,GR,GR,GR,GR,GR,GR],//24
+  [GR,SG,GR,GR,GR,GR,GR,GR,GR,GR,PT,PT,GR,GR,GR,GR,GR,GR,GR,GR,GR,SG,GR,GR,GR],//25 signs
+
+  // ── ROW 26-34: מג'דל שמס village ─────────────────────
+  [GR,GR,WL,WL,WL,WL,WL,GR,GR,GR,PT,PT,GR,GR,GR,WL,WL,WL,WL,WL,GR,GR,GR,GR,GR],//26
+  [GR,GR,WL,RF,RF,RF,WL,GR,OL,GR,PT,PT,GR,OL,GR,WL,RF,RF,RF,WL,GR,GR,GR,GR,GR],//27
+  [GR,GR,WL,RF,RF,RF,WL,GR,GR,GR,PT,PT,GR,GR,GR,WL,RF,RF,RF,WL,GR,GR,GR,GR,GR],//28
+  [GR,GR,WL,FP,DS,FP,WL,GR,GR,GR,PT,PT,GR,GR,GR,WL,FP,FP,FP,WL,GR,GR,FL,GR,GR],//29 puzzle door!
+  [GR,GR,GR,GR,PT,GR,GR,GR,GR,GR,PT,PT,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR],//30 side path to door
+  [GR,OL,GR,GR,PT,PT,PT,PT,PT,PT,PT,PT,GR,GR,GR,GR,FL,GR,GR,OL,GR,GR,GR,GR,GR],//31 path connects
+  [GR,GR,GR,GR,GR,GR,OL,GR,GR,GR,PT,PT,GR,GR,GR,OL,GR,GR,GR,GR,GR,GR,GR,GR,GR],//32
+  [GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,PT,PT,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR],//33
+  [GR,GR,FL,GR,GR,GR,GR,TR,GR,GR,PT,PT,GR,TR,GR,GR,GR,FL,GR,GR,GR,GR,GR,GR,GR],//34
+
+  // ── ROW 35-39: Southern start ─────────────────────────
+  [GR,GR,GR,GR,GR,OL,GR,GR,GR,GR,PT,PT,GR,GR,GR,OL,GR,GR,GR,GR,GR,GR,GR,GR,GR],//35
+  [GR,TR,GR,GR,GR,GR,GR,TR,GR,GR,PT,PT,GR,TR,GR,GR,GR,GR,GR,TR,GR,GR,GR,GR,GR],//36
+  [GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,PT,PT,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR],//37
+  [GR,GR,FL,GR,GR,GR,GR,GR,GR,GR,PT,PT,GR,GR,GR,GR,GR,FL,GR,GR,GR,GR,GR,GR,GR],//38
+  [GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,PT,PT,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR,GR],//39
+];
+
+const MAP_W = 25, MAP_H = 40, TILE = 32;
+
+// ═══════════════════════════════════════════════════
+//  PHASER SCENE
+// ═══════════════════════════════════════════════════
+class WorldScene extends Phaser.Scene {
+  constructor(){ super('World'); }
+
+  // ── Generate tile textures procedurally ──
+  makeTiles(){
+    const G = this.make.graphics({add:false});
+    const T = TILE;
+
+    const t = (key, fn) => { G.clear(); fn(G,T); G.generateTexture(key,T,T); };
+
+    // Grass
+    t('gr',(g,T)=>{
+      g.fillStyle(0x2d6b1a); g.fillRect(0,0,T,T);
+      g.fillStyle(0x266015,0.4);
+      [[4,6],[12,2],[20,12],[8,20],[18,24],[26,8],[2,26],[28,20]].forEach(([x,y])=>g.fillRect(x,y,2,4));
+    });
+
+    // Path / dirt
+    t('pt',(g,T)=>{
+      g.fillStyle(0xb8924a); g.fillRect(0,0,T,T);
+      g.fillStyle(0xa8823a,0.5); g.fillRect(0,0,T,3); g.fillRect(0,T-3,T,3);
+      g.fillStyle(0xc8a255,0.3); g.fillRect(3,6,4,2); g.fillRect(20,18,5,2);
+    });
+
+    // Tree
+    t('tr',(g,T)=>{
+      g.fillStyle(0x2d6b1a); g.fillRect(0,0,T,T);
+      g.fillStyle(0x5c3d12); g.fillRect(13,20,6,12);
+      g.fillStyle(0x1a7a10); g.fillCircle(16,13,13);
+      g.fillStyle(0x228b22); g.fillCircle(13,11,9);
+      g.fillStyle(0x3aaa32); g.fillCircle(19,10,7);
+    });
+
+    // Olive tree
+    t('ol',(g,T)=>{
+      g.fillStyle(0x2d6b1a); g.fillRect(0,0,T,T);
+      g.fillStyle(0x4a3820); g.fillRect(13,18,5,14);
+      g.fillStyle(0x6b8e3a); g.fillCircle(16,12,12);
+      g.fillStyle(0x7a9e45); g.fillCircle(13,10,8);
+      g.fillStyle(0x9ab858); g.fillCircle(19,11,6);
+    });
+
+    // Wall (stone)
+    t('wl',(g,T)=>{
+      g.fillStyle(0x9b8b6a); g.fillRect(0,0,T,T);
+      g.fillStyle(0x8a7a5a,0.7);
+      for(let y=0;y<T;y+=8){
+        const xOff = (Math.floor(y/8)%2)*8;
+        g.fillRect(xOff,y,T-xOff>8?8:T-xOff,6);
+        if(xOff>0) g.fillRect(0,y,xOff-1,6);
+      }
+      g.fillStyle(0x6a5a40,0.3); g.fillRect(0,0,1,T); g.fillRect(T-1,0,1,T);
+    });
+
+    // Roof (terracotta)
+    t('rf',(g,T)=>{
+      g.fillStyle(0xc04428); g.fillRect(0,0,T,T);
+      g.fillStyle(0xa03418,0.6);
+      for(let i=0;i<5;i++) g.fillRect(0,i*7,T,3);
+      g.fillStyle(0xd05535,0.3); g.fillRect(0,0,T,4);
+    });
+
+    // Door South (puzzle - warm blue)
+    t('ds',(g,T)=>{
+      g.fillStyle(0xb8924a); g.fillRect(0,0,T,T); // path floor
+      g.fillStyle(0x3050a8); g.fillRect(7,3,18,28); // door frame
+      g.fillStyle(0x5070cc); g.fillRect(9,5,14,24); // door face
+      g.fillStyle(0xaaaaff,0.4); g.fillRect(9,5,7,24); // light side
+      g.fillStyle(0xffdd00); g.fillCircle(21,17,2); // knob
+      // "puzzle" icon hint
+      g.fillStyle(0xffffff,0.6); g.fillRect(12,9,4,4); g.fillRect(17,9,4,4);
+    });
+
+    // Door North (maze - purple)
+    t('dn',(g,T)=>{
+      g.fillStyle(0xb8924a); g.fillRect(0,0,T,T);
+      g.fillStyle(0x502880); g.fillRect(7,3,18,28);
+      g.fillStyle(0x7040aa); g.fillRect(9,5,14,24);
+      g.fillStyle(0xccaaff,0.3); g.fillRect(9,5,7,24);
+      g.fillStyle(0xffdd00); g.fillCircle(21,17,2);
+    });
+
+    // River
+    t('rv',(g,T)=>{
+      g.fillStyle(0x1a5f9a); g.fillRect(0,0,T,T);
+      g.fillStyle(0x2575b8,0.5); g.fillRect(0,6,T,5); g.fillRect(0,18,T,5);
+      g.fillStyle(0xaaddff,0.15); g.fillRect(0,2,T,2);
+    });
+
+    // Bridge — two textures: broken and built
+    t('br_broken',(g,T)=>{
+      g.fillStyle(0x1a5f9a); g.fillRect(0,0,T,T);
+      g.fillStyle(0x5a3a1a,0.6); g.fillRect(1,3,10,8); g.fillRect(20,16,9,8);
+      g.fillStyle(0xaaddff,0.25); g.fillRect(0,10,T,8);
+    });
+    t('br_built',(g,T)=>{
+      g.fillStyle(0x1a5f9a); g.fillRect(0,0,T,T);
+      g.fillStyle(0x8B5E3C); g.fillRect(1,3,T-2,26);
+      g.fillStyle(0x6B4E2C,0.7); for(let y=5;y<27;y+=6) g.fillRect(1,y,T-2,3);
+      g.fillStyle(0xa07040,0.5); g.fillRect(1,3,T-2,3);
+    });
+    // Alias 'br' → current state
+    t('br',(g,T)=>{
+      g.fillStyle(0x1a5f9a); g.fillRect(0,0,T,T);
+      g.fillStyle(0x5a3a1a,0.6); g.fillRect(1,3,10,8); g.fillRect(20,16,9,8);
+      g.fillStyle(0xaaddff,0.25); g.fillRect(0,10,T,8);
+    });
+
+    // Rock
+    t('rk',(g,T)=>{
+      g.fillStyle(0x2d6b1a); g.fillRect(0,0,T,T);
+      g.fillStyle(0x888888); g.fillEllipse(16,19,22,18);
+      g.fillStyle(0x999999); g.fillEllipse(14,17,18,14);
+      g.fillStyle(0xbbbbbb,0.5); g.fillRect(12,13,6,4);
+    });
+
+    // Flower
+    t('fl',(g,T)=>{
+      g.fillStyle(0x2d6b1a); g.fillRect(0,0,T,T);
+      g.fillStyle(0x266015,0.4); [[4,6],[18,20],[26,8]].forEach(([x,y])=>g.fillRect(x,y,2,4));
+      g.fillStyle(0xffaa00); g.fillCircle(8,10,4); g.fillCircle(24,22,3);
+      g.fillStyle(0xff5599); g.fillCircle(20,8,3); g.fillCircle(6,22,3);
+      g.fillStyle(0xffffff,0.8); g.fillCircle(8,10,1); g.fillCircle(20,8,1);
+    });
+
+    // Sign
+    t('sg',(g,T)=>{
+      g.fillStyle(0x2d6b1a); g.fillRect(0,0,T,T);
+      g.fillStyle(0x6B4E2C); g.fillRect(14,16,4,16);
+      g.fillStyle(0xC8963C); g.fillRect(5,5,22,14);
+      g.fillStyle(0xffe080,0.7); g.fillRect(7,7,18,4);
+      g.fillStyle(0xa07030,0.5); g.fillRect(7,12,18,4);
+    });
+
+    // Floor/pavement — inside buildings (stone tiles)
+    t('fp',(g,T)=>{
+      g.fillStyle(0xd4b888); g.fillRect(0,0,T,T);
+      g.fillStyle(0xb8986a,0.6);
+      g.fillRect(0,0,T,2); g.fillRect(0,T/2,T,2);  // horizontal grout lines
+      g.fillRect(0,0,2,T); g.fillRect(T/2,0,2,T);  // vertical grout lines
+      g.fillStyle(0xc0a060,0.2); g.fillRect(2,2,T/2-2,T/2-2); // tile A shading
+      g.fillStyle(0xe8c888,0.15); g.fillRect(T/2+2,T/2+2,T/2-4,T/2-4); // tile D highlight
+    });
+
+    G.destroy();
+  }
+
+  // ── Make player textures (4 dirs × 2 frames) ──
+  makePlayer(){
+    const g = this.make.graphics({add:false});
+    const PW = 20, PH = 28;
+    const dirs = ['d','l','r','u'];
+
+    dirs.forEach((dir,di)=>{
+      [0,1].forEach(frame=>{
+        g.clear();
+        const legShift = frame===0 ? 0 : 3;
+
+        // Shadow
+        g.fillStyle(0x000000,0.25); g.fillEllipse(10,26,18,6);
+        // Legs
+        g.fillStyle(0x205090);
+        g.fillRect(5,18,5,8+legShift);
+        g.fillRect(11,18,5,8-legShift);
+        // Shoes
+        g.fillStyle(0x3a2208);
+        g.fillRect(4,25+legShift,6,3);
+        g.fillRect(11,25-legShift,6,3);
+        // Body (green tunic = Zelda!)
+        g.fillStyle(0x2a8830); g.fillRect(4,10,12,10);
+        g.fillStyle(0x1a6020,0.5); g.fillRect(4,10,2,10); // shadow side
+        // Arms
+        g.fillStyle(0xffcc88);
+        if(dir==='l'){ g.fillRect(0,11,5,5); }
+        else if(dir==='r'){ g.fillRect(15,11,5,5); }
+        else { g.fillRect(1,11,4,4); g.fillRect(15,11,4,4); }
+        // Head
+        g.fillStyle(0xffcc88); g.fillRect(5,2,10,10);
+        // Hair
+        g.fillStyle(0xffdd55); g.fillRect(4,1,12,5);
+        if(dir==='u') g.fillRect(4,1,12,9); // full hair when facing up
+        // Eyes / face direction
+        g.fillStyle(0x222222);
+        if(dir==='d'){ g.fillRect(7,7,2,2); g.fillRect(12,7,2,2); }
+        else if(dir==='l'){ g.fillRect(5,7,2,2); }
+        else if(dir==='r'){ g.fillRect(13,7,2,2); }
+        // Hat (Zelda style!)
+        g.fillStyle(0x2a8830); g.fillRect(4,0,12,3);
+        if(dir!=='u') g.fillRect(12,0,6,5); // hat tip
+
+        g.generateTexture(`p_${dir}${frame}`,PW,PH);
+      });
+    });
+    g.destroy();
+  }
+
+  // ── Update bridge tiles to built state ──
+  refreshBridgeTiles(){
+    if(!this.bridgeTiles) return;
+    const key = chalumDone ? 'br_built' : 'br_broken';
+    this.bridgeTiles.forEach(img=>img.setTexture(key));
+  }
+
+  preload(){ /* textures generated in create() */ }
+
+  create(){
+    this.makeTiles();
+    this.makePlayer();
+    const T=TILE;
+    const WW=MAP_W*T, WH=MAP_H*T; // world size 800×1280
+
+    // ── Draw world map ──
+    this.bridgeTiles=[];
+    for(let r=0;r<MAP_H;r++){
+      for(let c=0;c<MAP_W;c++){
+        const tile = MAP[r][c];
+        const x=c*T+T/2, y=r*T+T/2;
+        let key;
+        switch(tile){
+          case GR: key='gr'; break;
+          case PT: key='pt'; break;
+          case TR: key='tr'; break;
+          case OL: key='ol'; break;
+          case WL: key='wl'; break;
+          case RF: key='rf'; break;
+          case DS: key='ds'; break;
+          case DN: key='dn'; break;
+          case RV: key='rv'; break;
+          case BR: key=chalumDone?'br_built':'br_broken'; break;
+          case RK: key='rk'; break;
+          case FL: key='fl'; break;
+          case SG: key='sg'; break;
+          case FP: key='fp'; break;
+          default: key='gr';
+        }
+        const img = this.add.image(x,y,key).setDepth(0);
+        if(tile===BR) this.bridgeTiles.push(img);
+      }
+    }
+
+    // ── Decorative elements (flowers on top of tiles) ──
+    // Add some random extra details
+    const extras = [
+      {r:9,c:3,'type':'fl'},{r:20,c:7,'type':'fl'},
+      {r:32,c:18,'type':'fl'},{r:14,c:20,'type':'fl'},
+    ];
+
+    // ── Player ──
+    const startCol = 11, startRow = 38;
+    this.px = startCol*T + T/2;
+    this.py = startRow*T + T/2;
+    this.playerDir = 'd';
+    this.playerFrame = 0;
+    this.playerAnimTimer = 0;
+    this.playerMoving = false;
+
+    this.playerSprite = this.add.image(this.px, this.py, 'p_d0').setDepth(5);
+
+    // ── Camera ──
+    this.cameras.main.setBounds(0,0,WW,WH);
+    this.cameras.main.startFollow(this.playerSprite, true, 0.1, 0.1);
+    this.cameras.main.setZoom(1);
+
+    // ── Input ──
+    this.cursors = this.input.keyboard.createCursorKeys();
+    this.wasd = this.input.keyboard.addKeys('W,A,S,D');
+    this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+    this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+    // ── Dialog state ──
+    this.dialogOpen = false;
+    this.dialogAction = null;
+    this._registerCloseHelper();
+
+    // ── State (from return) ──
+    this.checkReturn();
+    this.updateProvisions();
+    this.updateEco(false);
+
+    // ── Welcome message ──
+    if(!localStorage.getItem(KEY_S)){
+      localStorage.setItem(KEY_S,'1');
+      this.time.delayedCall(600, ()=>{
+        this.showDialog(
+          '🧭 ברוכה הבאה לשביל החדשנות!',
+          'השתמשי בחצים (← → ↑ ↓) להזזת הדמות. כשתגיעי לכניסה לאתגר, לחצי E.',
+          null,
+          true
+        );
+      });
+    }
+
+    // ── Bridge sign text ──
+    this.signTexts = {
+      25: { // row 25 has signs
+        1:  { title:'שלט — צפון', body:'קרית שמונה — 45 ק״מ צפונה. הגשר על הנחל שבור. אי אפשר לעבור!' },
+        21: { title:'שלט — צפון', body:'קרית שמונה — 45 ק״מ. הגשר שבור — ישנה אגדה שרק "חיבורים" אמיתיים יכולים לבנות גשרים.' },
+      }
+    };
+  }
+
+  // ── Tile helpers ──
+  tileAt(px,py){
+    const c=Math.floor(px/TILE), r=Math.floor(py/TILE);
+    if(r<0||r>=MAP_H||c<0||c>=MAP_W) return WL;
+    return MAP[r][c];
+  }
+
+  isTileWalkable(t){
+    if(t===BR) return chalumDone; // bridge only if puzzle done
+    return WALKABLE.has(t) || t===PT || t===DS || t===DN;
+  }
+
+  // ── Movement ──
+  tryMove(dx,dy){
+    const T=TILE;
+    const margin=6; // collision margin
+    const nx=this.px+dx, ny=this.py+dy;
+    // Check 4 corners of player hitbox
+    const pts = [
+      [nx-margin, ny-margin],
+      [nx+margin, ny-margin],
+      [nx-margin, ny+margin],
+      [nx+margin, ny+margin],
+    ];
+    for(const [px,py] of pts){
+      const t = this.tileAt(px,py);
+      if(!this.isTileWalkable(t)) return false;
+    }
+    this.px=nx; this.py=ny;
+    return true;
+  }
+
+  // ── Proximity check for doors / signs ──
+  nearbyInteractable(){
+    const T=TILE;
+    const c=Math.round(this.px/T), r=Math.round(this.py/T);
+    for(let dr=-1;dr<=1;dr++){
+      for(let dc=-1;dc<=1;dc++){
+        const rr=r+dr, cc=c+dc;
+        if(rr<0||rr>=MAP_H||cc<0||cc>=MAP_W) continue;
+        const t=MAP[rr][cc];
+        if(t===DS) return {type:'door_south',r:rr,c:cc};
+        if(t===DN) return {type:'door_north',r:rr,c:cc};
+        if(t===SG) return {type:'sign',r:rr,c:cc};
+        if(t===BR && !chalumDone && (Math.abs(dr)<=1 && Math.abs(dc)<=0))
+          return {type:'bridge_broken'};
+      }
+    }
+    return null;
+  }
+
+  showDialog(title, body, action, autoClose=false){
+    const el = document.getElementById('dialog');
+    document.getElementById('d-title').textContent = title;
+    document.getElementById('d-body').textContent  = body;
+    document.getElementById('d-hint').style.display = action||!autoClose ? '' : 'none';
+    el.style.display='block';
+    this.dialogOpen=true;
+    this.dialogAction=action;
+    if(autoClose){
+      document.getElementById('d-hint').textContent='לחצי E / Space לסגירה';
+    }
+  }
+
+  closeDialog(){
+    document.getElementById('dialog').style.display='none';
+    this.dialogOpen=false;
+    const a=this.dialogAction;
+    this.dialogAction=null;
+    if(a) a();
+  }
+
+  _registerCloseHelper(){
+    // DOM-level fallback so dialog closes even when Phaser canvas isn't focused
+    window._closeDialogIfOpen=()=>{
+      if(this.dialogOpen) this.closeDialog();
+    };
+    document.addEventListener('keydown',(e)=>{
+      if(this.dialogOpen&&(e.key==='e'||e.key==='E'||e.key===' '||e.key==='Enter')){
+        e.preventDefault();
+        this.closeDialog();
+      }
+    });
+  }
+
+  showToast(title,sub){
+    document.getElementById('t-ttl').textContent=title;
+    document.getElementById('t-sub').textContent=sub;
+    const t=document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),3500);
+  }
+
+  updateProvisions(){
+    if(chalumDone) document.getElementById('prov-chalum').classList.add('earned');
+    if(mazeDone)   document.getElementById('prov-maze').classList.add('earned');
+  }
+
+  updateEco(animate){
+    const pct = (chalumDone?1:0)+(mazeDone?1:0);
+    const fill=document.getElementById('eco-fill');
+    const pctEl=document.getElementById('eco-pct');
+    const val=pct*50;
+    if(animate){
+      setTimeout(()=>{fill.style.width=val+'%';},60);
+      let t=0,from=val-50;
+      const step=()=>{t+=16;pctEl.textContent=Math.min(Math.round(from+50*t/1200),val)+'%';if(t<1200)requestAnimationFrame(step);else pctEl.textContent=val+'%';};
+      setTimeout(()=>requestAnimationFrame(step),60);
+    } else {
+      fill.style.transition='none';fill.style.width=val+'%';pctEl.textContent=val+'%';
+      setTimeout(()=>{fill.style.transition='';},80);
+    }
+  }
+
+  checkReturn(){
+    const params=new URLSearchParams(location.search);
+    const from=params.get('from');
+    if(!from) return;
+    history.replaceState({},'','gesher-demo.html');
+
+    if(from==='chalum' && chalumDone){
+      this.time.delayedCall(300,()=>{
+        // Rebuild bridge texture now that chalumDone=true
+        this.refreshBridgeTiles();
+        this.showToast('✅ פאזל הושלם!','🎒 קיבלת: 🔤 חיבורים — הגשר נבנה!');
+        document.getElementById('prov-chalum').classList.add('earned');
+        this.updateEco(true);
+        // Move player north of village
+        this.px=11*TILE+TILE/2; this.py=32*TILE+TILE/2;
+        this.playerSprite.setPosition(this.px,this.py);
+      });
+    } else if(from==='maze' && mazeDone){
+      this.time.delayedCall(300,()=>{
+        this.showToast('✅ המבוך הושלם!','🎒 קיבלת: 🎓 כ״א מיומן');
+        document.getElementById('prov-maze').classList.add('earned');
+        this.updateEco(true);
+        this.px=11*TILE+TILE/2; this.py=5*TILE+TILE/2;
+        this.playerSprite.setPosition(this.px,this.py);
+        if(chalumDone&&mazeDone){
+          this.time.delayedCall(3000,()=>{
+            document.getElementById('celebrate').style.display='flex';
+          });
+        }
+      });
+    }
+  }
+
+  update(time,delta){
+    if(this.dialogOpen){
+      // E or Space closes dialog
+      if(Phaser.Input.Keyboard.JustDown(this.keyE)||
+         Phaser.Input.Keyboard.JustDown(this.keySpace)){
+        this.closeDialog();
+      }
+      return;
+    }
+
+    const spd=2.5; // pixels per frame
+    let dx=0,dy=0;
+    let newDir=this.playerDir;
+
+    if(this.cursors.left.isDown  || this.wasd.A.isDown){ dx=-spd; newDir='l'; }
+    if(this.cursors.right.isDown || this.wasd.D.isDown){ dx= spd; newDir='r'; }
+    if(this.cursors.up.isDown    || this.wasd.W.isDown){ dy=-spd; newDir='u'; }
+    if(this.cursors.down.isDown  || this.wasd.S.isDown){ dy= spd; newDir='d'; }
+
+    // Normalize diagonal
+    if(dx&&dy){ dx*=0.707; dy*=0.707; }
+
+    this.playerMoving=false;
+    if(dx||dy){
+      this.playerDir=newDir;
+      const movedX=this.tryMove(dx,0);
+      const movedY=this.tryMove(0,dy);
+      this.playerMoving=movedX||movedY;
+    }
+
+    // Animation
+    if(this.playerMoving){
+      this.playerAnimTimer+=delta;
+      if(this.playerAnimTimer>140){
+        this.playerFrame=1-this.playerFrame;
+        this.playerAnimTimer=0;
+      }
+    } else {
+      this.playerFrame=0;
+      this.playerAnimTimer=0;
+    }
+    this.playerSprite.setPosition(this.px,this.py);
+    this.playerSprite.setTexture(`p_${this.playerDir}${this.playerFrame}`);
+    this.playerSprite.setDepth(5);
+
+    // Check E key for interaction
+    if(Phaser.Input.Keyboard.JustDown(this.keyE)||
+       Phaser.Input.Keyboard.JustDown(this.keySpace)){
+      const near = this.nearbyInteractable();
+      if(near){
+        if(near.type==='door_south'){
+          if(chalumDone){
+            this.showDialog('🧩 כניסה לכפר','כבר פתרת את האתגר! הצידה "חיבורים" בסלך.',null,true);
+          } else {
+            this.showDialog(
+              '🧩 כניסה לכפר מג׳דל שמס',
+              'בכפר הזה מסתתר אתגר מיוחד. פתרי אותו וקבלי את הצידה "חיבורים" לדרך!',
+              ()=>{ window.location.href='chalum-puzzle.html'; }
+            );
+            document.getElementById('d-hint').textContent='לחץ E להיכנס לאתגר';
+          }
+        } else if(near.type==='door_north'){
+          if(!chalumDone){
+            this.showDialog('🔒 כניסה לקרית שמונה','עליך קודם לעבור את אתגר מג׳דל שמס ולבנות את הגשר!',null,true);
+          } else if(mazeDone){
+            this.showDialog('🏆 קרית שמונה','כבר השלמת את האתגר! הצידה "כ״א מיומן" בסלך.',null,true);
+          } else {
+            this.showDialog(
+              '🧲 כניסה לתל חי אוניברסיטת קרית שמונה והגליל',
+              'ברוכה הבאה לתל חי! האתגר: הובילי בוגרים מהאוניברסיטה לקרית שמונה. קבלי את הצידה "כ״א מיומן"!',
+              ()=>{ window.location.href='tal-hai-maze.html'; }
+            );
+            document.getElementById('d-hint').textContent='לחץ E להיכנס לאתגר';
+          }
+        } else if(near.type==='sign'){
+          const row=near.r, col=near.c;
+          const txt = (this.signTexts[row]||{})[col];
+          if(txt){
+            if(chalumDone && row===25){
+              this.showDialog('🌉 הגשר נבנה!',
+                'הצלחת! "חיבורים" בין-תרבותיים פתחו את הגשר. המסלול לקרית שמונה פתוח!',
+                null,true);
+            } else {
+              this.showDialog(txt.title,txt.body,null,true);
+            }
+          }
+        } else if(near.type==='bridge_broken'){
+          this.showDialog(
+            '🌊 הגשר שבור!',
+            'הנחל חוסם את הדרך צפונה. האגדה אומרת: רק "חיבורים" אמיתיים בין עמים יכולים לבנות גשרים. פתרי את אתגר מג׳דל שמס!',
+            null,true
+          );
+        }
+      }
+    }
+
+    // Auto-detect near door (show hint)
+    const near2=this.nearbyInteractable();
+    // Could add a UI indicator here
+  }
+}
+
+// ═══════════════════════════════════════════════════
+//  PHASER CONFIG
+// ═══════════════════════════════════════════════════
+const config = {
+  type: Phaser.AUTO,
+  width: MAP_W*TILE,   // 800
+  height: 520,
+  backgroundColor: '#0a1a0a',
+  parent: 'game',
+  scene: WorldScene,
+  pixelArt: true,
+  antialias: false,
+  roundPixels: true,
+};
+
+new Phaser.Game(config);
+
+// ── Update UI from outside Phaser ──
+function updateAllUI(){
+  chalumDone = localStorage.getItem(KEY_C)==='1';
+  mazeDone   = localStorage.getItem(KEY_M)==='1';
+}
+</script>
+</body>
+</html>
